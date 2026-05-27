@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Hays Group Global Dispatch System v2</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#111827;--c:#1F2937;--b:#374151;--g:#B8935A;--gn:#10B981;--rd:#EF4444;--or:#F59E0B;--bl:#3B82F6;--w:#F9FAFB;--gy:#6B7280;--gd:#374151;--gl:#9CA3AF;--pp:#8B5CF6}
+body{font-family:-apple-system,system-ui,sans-serif;background:var(--bg);color:var(--w);font-size:13px}
+.H{display:none!important}button{cursor:pointer}input,select,textarea{font-family:inherit}
+.hdr{background:var(--c);border-bottom:2px solid var(--g);padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.tab{padding:6px 12px;border:none;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:transparent;color:var(--gy)}
+.tab.on{background:var(--g);color:#111}
+.gm{display:grid;grid-template-columns:1fr 300px;height:calc(100vh - 50px)}
+.sc{overflow:auto;padding:16px}.sb{background:var(--c);border-left:1px solid var(--b);overflow:auto}
+.st{background:var(--c);border:1px solid var(--b);padding:12px;text-align:center}
+.sn{font-size:26px;font-weight:800}.sl{font-size:9px;color:var(--gy);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+.jb{border:1px solid var(--b);margin-bottom:8px;background:var(--c)}
+.jh{padding:8px 12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;border-left:3px solid var(--g)}
+.rr{padding:8px 12px;border-top:1px solid rgba(255,255,255,.03);display:grid;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dg{background:var(--gn)}.dr{background:var(--rd)}.dy{background:var(--or)}
+.pl{width:20px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.po{background:rgba(184,147,90,.15);color:var(--g);border:1px solid rgba(184,147,90,.25)}
+.px{background:rgba(255,255,255,.02);color:var(--gd);border:1px solid rgba(255,255,255,.04)}
+.bf{background:var(--g);color:#111;border:none;padding:3px 8px;font-size:10px;font-weight:700;letter-spacing:1px}
+.br{background:transparent;border:1px solid rgba(239,68,68,.2);color:var(--rd);padding:3px 8px;font-size:10px;font-weight:600}
+.mb{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:200}
+.mx{background:var(--c);border:2px solid var(--g);width:620px;max-height:85vh;overflow:auto}
+.cr{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.03);display:grid;grid-template-columns:1fr 80px 50px 90px 55px;align-items:center;gap:6px;cursor:pointer}
+.cr:hover{background:rgba(184,147,90,.04)}
+.dt{width:50px;padding:8px 0;text-align:center;font-weight:700;font-size:12px;cursor:pointer;border:1px solid var(--b)}
+.dt.on{background:rgba(184,147,90,.15);border-color:rgba(184,147,90,.3);color:var(--g)}
+.fw{max-width:640px;margin:0 auto;padding:12px 16px}
+.fl{font-size:10px;font-weight:700;color:var(--gy);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:4px;display:block}
+.fi{width:100%;padding:10px;background:rgba(255,255,255,.05);border:1px solid var(--b);color:var(--w);font-size:13px;outline:none}
+.fs{width:100%;padding:10px;background:var(--c);border:1px solid var(--b);color:var(--w);font-size:13px;outline:none}
+.fs option{background:var(--c);color:var(--w)}
+.fa{display:flex;align-items:center;gap:6px;background:transparent;border:1px dashed rgba(184,147,90,.3);color:var(--g);padding:8px;font-size:11px;font-weight:600;width:100%;justify-content:center;margin-top:6px}
+.fr{background:transparent;border:none;color:var(--rd);font-size:16px;padding:0 4px;cursor:pointer}
+.dytb{flex:1;min-width:40px;padding:8px 4px;text-align:center;cursor:pointer;font-size:11px;font-weight:700;border:1px solid rgba(255,255,255,.04);background:rgba(255,255,255,.02);color:var(--gy)}
+.dytb.on{background:rgba(184,147,90,.15);border-color:rgba(184,147,90,.4);color:var(--g)}
+.sb2{width:100%;padding:14px;margin-top:12px;background:var(--g);color:#111;border:none;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.sb2:disabled{opacity:.4;cursor:default}
+.fb{padding:3px 8px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--b);background:transparent;color:var(--gy);cursor:pointer}
+.fb.on{background:rgba(184,147,90,.12);border-color:rgba(184,147,90,.25);color:var(--g)}
+.ss{padding:12px;border-bottom:1px solid var(--b)}
+.ec{padding:8px;background:rgba(16,185,129,.04);border:1px solid rgba(16,185,129,.1);margin-bottom:6px;font-size:11px;cursor:pointer}
+.lw{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.lb{width:400px;text-align:center}
+.lg{width:160px;margin:0 auto 24px;display:block;border-radius:8px}
+.lt{display:flex;border:1px solid var(--b);margin-bottom:20px}
+.lt button{flex:1;padding:10px;border:none;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.lf{background:var(--c);border:1px solid var(--b);padding:24px}
+.li{width:100%;padding:12px;background:rgba(255,255,255,.05);border:1px solid var(--b);color:var(--w);font-size:14px;margin-bottom:12px;outline:none}
+.lb2{width:100%;padding:12px;background:var(--g);color:#111;border:none;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase}
+.qg{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:16px}
+.qb{padding:10px;border:1px solid var(--b);background:rgba(255,255,255,.02);color:var(--gl);font-size:11px;font-weight:600}
+.qb:hover{border-color:var(--g);color:var(--g)}
+.score-bar{display:flex;gap:1px;margin-top:2px}
+.score-pip{width:8px;height:8px}
+.modal-tabs{display:flex;border-bottom:1px solid var(--b);margin-bottom:12px}
+.modal-tab{padding:8px 14px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;background:transparent;color:var(--gy);cursor:pointer}
+.modal-tab.on{color:var(--g);border-bottom:2px solid var(--g)}
+.profile-section{margin-bottom:16px;padding:12px;background:rgba(255,255,255,.02);border:1px solid var(--b)}
+.profile-section-title{font-size:10px;font-weight:700;color:var(--g);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.chip{display:inline-block;font-size:9px;font-weight:700;padding:2px 6px;margin:2px;letter-spacing:.5px}
+.chip-g{background:rgba(16,185,129,.1);color:var(--gn);border:1px solid rgba(16,185,129,.2)}
+.chip-b{background:rgba(59,130,246,.1);color:var(--bl);border:1px solid rgba(59,130,246,.2)}
+.chip-p{background:rgba(139,92,246,.1);color:var(--pp);border:1px solid rgba(139,92,246,.2)}
+.chip-o{background:rgba(245,158,11,.1);color:var(--or);border:1px solid rgba(245,158,11,.2)}
+.chip-r{background:rgba(239,68,68,.1);color:var(--rd);border:1px solid rgba(239,68,68,.2)}
+.restrict-tag{font-size:10px;color:var(--rd);padding:2px 6px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.1);margin:2px;display:inline-block}
+@media(max-width:768px){.gm{grid-template-columns:1fr}.sb{display:none}}</style>
+</head><body>
+<div id="app"></div>
+<script>
+const LH="data:image/jpeg;base64,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";
+const LS="data:image/jpeg;base64,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";
+const DAYS=["MON","TUE","WED","THU","FRI","SAT","SUN"];
+const WD=["MON","TUE","WED","THU","FRI"];
+const DF={MON:"Monday",TUE:"Tuesday",WED:"Wednesday",THU:"Thursday",FRI:"Friday",SAT:"Saturday",SUN:"Sunday"};
+const POS=["Foreman","Operator","Carpenter","Carpenter/Finisher","Concrete Foreman","Concrete Finisher","Laborer","Welder","Electrician","Driver","Safety Officer","Iron Worker","Handyman","Rail Foreman","Rail Laborer","Rail Welder","Rail Operator","Asphalt Operator","Asphalt Laborer","Screed Operator","Pipefitter","Vac Truck Operator","GPR Technician"];
+const EQT=["Mini Excavator","Excavator","Dozer","Wheel Loader","Skip Loader","Skid Steer","CTL","Backhoe","Dump Truck","Water Truck","Lowbed","Scissor Lift","Boom Lift","Telehandler","Generator","Welder Rig","Vac Truck","Roller","Plate Compactor","Water Buffalo","Light Tower","Concrete Pump","Crane","Forklift","Blast Pot","Dump Trailer"];
+const EQCERTS=["Excavator","Mini Excavator","Dozer","Loader","Skid Steer","CTL","Backhoe","Crane","Forklift","Telehandler","Roller","Motor Grader","Boom Lift","Scissor Lift","Water Truck","Dump Truck","Lowbed","Vac Truck","Blast Pot"];
+const SAFCERTS=["OSHA 30","OSHA 10","First Aid/CPR","Confined Space","HAZWOPER","Fall Protection","Crane Signaler","MSHA","Trench/Excavation Competent","Flagger"];
+const BADGES=["SCE","SpaceX","Disney/Theme Park","PG&E","SoCalGas","AT&T","BNSF","UP Railroad"];
+const RKW=["concrete pour","pour ","asphalt","paving","pave ","energize","energizing","inspection","mob","demob","mobiliz","hot work","crane lift","shutdown","outage","tie-in","cut-over","backfill","x-ray","welding test"];
+const EC={HHCI:"#10B981",CPCI:"#3B82F6",BEC:"#8B5CF6","Safe-Ex":"#F59E0B",GBE:"#EAB308",Heritage:"#14B8A6"};
+const STATUSES=["active","vacation","fmla","workers_comp","suspended","terminated","laid_off"];
+const OFFBOARD_REASONS=["Voluntary Quit","Terminated for Cause","Laid Off / RIF","No Call No Show","Failed Drug Test","Do Not Rehire","Retired","Other"];
+const SCORE_LABELS=["Quality","Equip Care","Safety","Punctuality","Teamwork"];
+
+const ADM=[
+  {id:"kirby",name:"Kirby Hays",role:"executive",pw:"hays2026"},
+  {id:"johnathan",name:"Johnathan Hayes",role:"dispatch",pw:"dispatch1"},
+  {id:"karun",name:"Karun Mani",role:"executive",pw:"karun2026"},
+  {id:"jerry",name:"Jerry Neuman",role:"executive",pw:"jerry2026"}
+];
+
+// Enhanced workers: q=positions qualified, eq=equipment certs, sf=safety creds, bd=client badges, sc=scores[quality,equipCare,safety,punctuality,teamwork], st=status, rate=burdened rate, res=restrictions
+const W=[
+{id:746,n:"Felix Arizmendi",p:"Foreman",e:"HHCI",ph:"951-533-2348",c:"Big Bear Lake",q:["Foreman","Operator","Pipefitter","Laborer"],eq:["Excavator","Mini Excavator","Loader","Dozer","Backhoe"],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[3,3,4,4,3],st:"active",rate:72.50,res:[]},
+{id:1140,n:"Jimmy Enriquez",p:"Superintendent",e:"HHCI",ph:"951-961-0600",c:"Perris",q:["Concrete Foreman","Foreman","Operator"],eq:["Excavator","Skid Steer","CTL","Loader"],sf:["OSHA 30","First Aid/CPR","Confined Space"],bd:["SCE"],sc:[4,4,5,4,4],st:"active",rate:85.00,res:[]},
+{id:1456,n:"Mike Moyers",p:"Superintendent",e:"HHCI",ph:"951-295-1943",c:"San Diego",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["AT&T"],sc:[4,3,4,5,4],st:"active",rate:88.00,res:[]},
+{id:1895,n:"James Carl",p:"Foreman",e:"HHCI",ph:"760-792-8094",c:"Hesperia",q:["Foreman","Operator","Asphalt Operator"],eq:["Excavator","Dozer","Roller","Motor Grader"],sf:["OSHA 30","First Aid/CPR"],bd:["UP Railroad"],sc:[4,4,4,4,3],st:"active",rate:78.00,res:[]},
+{id:3072,n:"Christian Ramirez",p:"Concrete Foreman",e:"HHCI",ph:"661-565-4766",c:"Bakersfield",q:["Concrete Foreman","Concrete Finisher","Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:[],sc:[5,4,4,4,4],st:"active",rate:75.00,res:[]},
+{id:3126,n:"Raul Cabrera",p:"Superintendent",e:"HHCI",ph:"951-295-2974",c:"Corona",q:["Foreman","Carpenter","Concrete Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR","Confined Space"],bd:["AT&T"],sc:[4,4,5,5,4],st:"active",rate:90.00,res:[]},
+{id:3157,n:"Steve Goodwin",p:"Asst Superintendent",e:"HHCI",ph:"951-500-4551",c:"Perris",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:[],sc:[3,3,4,4,4],st:"active",rate:82.00,res:[]},
+{id:3164,n:"Nick Gard",p:"Foreman",e:"HHCI",ph:"951-809-8289",c:"Placentia",q:["Foreman","Operator"],eq:["Excavator","Mini Excavator","Skid Steer","CTL"],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[4,4,4,3,3],st:"active",rate:72.00,res:[]},
+{id:3293,n:"Simeon Scovel",p:"Superintendent",e:"HHCI",ph:"951-212-8035",c:"Ontario",q:["Foreman","Concrete Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR","Trench/Excavation Competent"],bd:["SCE"],sc:[5,4,5,5,5],st:"active",rate:92.00,res:[]},
+{id:3419,n:"David Badillo",p:"Foreman",e:"HHCI",ph:"951-261-7522",c:"Riverside",q:["Foreman","Operator"],eq:["Excavator","Backhoe","Loader"],sf:["OSHA 10"],bd:["SoCalGas"],sc:[3,3,3,4,3],st:"active",rate:70.00,res:[]},
+{id:3497,n:"Andres Garcia",p:"Carpenter/Finisher",e:"HHCI",ph:"909-243-6844",c:"San Bernardino",q:["Carpenter/Finisher","Concrete Finisher"],eq:[],sf:["OSHA 10"],bd:[],sc:[4,3,4,4,4],st:"active",rate:58.00,res:[]},
+{id:3508,n:"Jesus Gonzalez",p:"Concrete Foreman",e:"HHCI",ph:"951-405-9125",c:"Riverside",q:["Concrete Foreman","Concrete Finisher","Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[5,4,5,5,4],st:"active",rate:76.00,res:[]},
+{id:3585,n:"Jessie Bartolo",p:"Carpenter/Finisher",e:"HHCI",ph:"714-213-6323",c:"Moreno Valley",q:["Carpenter/Finisher","Concrete Finisher","Carpenter"],eq:[],sf:["OSHA 10"],bd:["SpaceX"],sc:[4,4,4,4,4],st:"active",rate:60.00,res:[]},
+{id:3617,n:"Phillip Giles",p:"Operator",e:"HHCI",ph:"951-536-6000",c:"Pinon Hills",q:["Operator","Asphalt Operator"],eq:["Excavator","Dozer","Roller","Motor Grader","Loader"],sf:["OSHA 10"],bd:[],sc:[4,4,3,4,3],st:"active",rate:65.00,res:[]},
+{id:3622,n:"Pio Villegas",p:"Concrete Laborer",e:"HHCI",ph:"909-963-3010",c:"San Bernardino",q:["Laborer","Concrete Finisher"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:48.00,res:[]},
+{id:3650,n:"Duane Ringhand",p:"Superintendent",e:"HHCI",ph:"909-827-8950",c:"San Diego",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["AT&T"],sc:[4,3,4,4,4],st:"active",rate:88.00,res:[]},
+{id:3752,n:"Ruben Arreola",p:"Laborer",e:"HHCI",ph:"661-865-9531",c:"Bakersfield",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[2,2,3,3,2],st:"active",rate:42.00,res:[]},
+{id:3817,n:"Juan Barron",p:"Concrete Foreman",e:"HHCI",ph:"323-681-1232",c:"San Bernardino",q:["Concrete Foreman","Concrete Finisher","Operator"],eq:["Excavator","Mini Excavator","Skid Steer"],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[4,4,4,3,3],st:"active",rate:74.00,res:[]},
+{id:3822,n:"Oscar Castaneda",p:"Laborer",e:"HHCI",ph:"909-231-7101",c:"Ontario",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:45.00,res:[]},
+{id:3899,n:"Richard Mendoza",p:"Foreman",e:"HHCI",ph:"951-255-2401",c:"Spring Valley",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["AT&T"],sc:[4,3,4,4,4],st:"active",rate:72.00,res:[]},
+{id:3993,n:"Luis Mendoza",p:"Laborer",e:"HHCI",ph:"951-474-6634",c:"Perris",q:["Laborer","Handyman"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,4,4],st:"active",rate:46.00,res:[]},
+{id:3995,n:"Sean Dusky",p:"Superintendent",e:"HHCI",ph:"951-203-8025",c:"Cabazon",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[4,3,4,4,3],st:"active",rate:86.00,res:[]},
+{id:4005,n:"Sergio Luna",p:"Laborer",e:"HHCI",ph:"909-224-0822",c:"Beaumont",q:["Laborer","Carpenter"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:46.00,res:[]},
+{id:4044,n:"Rafael Perez",p:"Welder Helper",e:"HHCI",ph:"661-369-9163",c:"Bakersfield",q:["Laborer","Welder"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:52.00,res:[]},
+{id:4090,n:"Joe Nuchols",p:"Project Manager",e:"HHCI",ph:"951-858-1151",c:"Corona",q:[],eq:[],sf:["OSHA 30"],bd:["SpaceX"],sc:[5,5,5,5,5],st:"active",rate:98.00,res:[]},
+{id:4100,n:"Jorge Madrid",p:"Carpenter/Finisher",e:"HHCI",ph:"909-780-5507",c:"San Bernardino",q:["Carpenter/Finisher","Concrete Finisher"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:56.00,res:[]},
+{id:4108,n:"Jake McCarter",p:"Superintendent",e:"HHCI",ph:"661-964-7787",c:"Los Angeles",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SpaceX"],sc:[4,3,4,4,4],st:"active",rate:84.00,res:[]},
+{id:4138,n:"Dean Mungerson",p:"Operator",e:"HHCI",ph:"951-732-2560",c:"Riverside",q:["Operator"],eq:["Excavator","Loader","Backhoe"],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:62.00,res:[]},
+{id:4140,n:"Henry McAlpine",p:"Carpenter",e:"HHCI",ph:"424-323-8357",c:"Redondo Beach",q:["Carpenter","Carpenter/Finisher"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,4,3],st:"active",rate:58.00,res:[]},
+{id:4141,n:"Luis Esparza",p:"Carpenter",e:"HHCI",ph:"760-270-3349",c:"Fontana",q:["Carpenter","Carpenter/Finisher","Laborer"],eq:[],sf:["OSHA 10"],bd:["SpaceX"],sc:[4,3,4,4,4],st:"active",rate:58.00,res:[]},
+{id:4144,n:"Ismael Santillan",p:"Laborer",e:"HHCI",ph:"805-302-7037",c:"Hemet",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:44.00,res:[]},
+{id:4151,n:"Cody Wienke",p:"Superintendent",e:"HHCI",ph:"951-205-7642",c:"Hacienda Heights",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SpaceX"],sc:[5,4,5,5,5],st:"active",rate:90.00,res:[]},
+{id:4152,n:"Daniel Ford",p:"Welder",e:"HHCI",ph:"661-599-3291",c:"Bakersfield",q:["Welder","Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:62.00,res:[]},
+{id:4153,n:"Raul Moran",p:"Carpenter",e:"HHCI",ph:"951-537-7890",c:"Yucaipa",q:["Carpenter"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:56.00,res:[]},
+{id:4154,n:"Carlos Islas",p:"Carpenter",e:"HHCI",ph:"323-818-2865",c:"Los Angeles",q:["Carpenter","Carpenter/Finisher"],eq:[],sf:["OSHA 10"],bd:[],sc:[4,3,4,4,4],st:"active",rate:58.00,res:[]},
+{id:4156,n:"Brian Adams",p:"Carpenter",e:"HHCI",ph:"310-293-7921",c:"Menifee",q:["Carpenter"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:56.00,res:[]},
+{id:4157,n:"Angel Salazar",p:"Laborer",e:"HHCI",ph:"951-703-5685",c:"Riverside",q:["Laborer","Concrete Finisher"],eq:[],sf:["OSHA 10"],bd:["SpaceX"],sc:[3,3,4,4,3],st:"active",rate:46.00,res:[]},
+{id:4161,n:"Anthony Heredia",p:"Welder",e:"HHCI",ph:"661-575-7293",c:"Bakersfield",q:["Welder"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:64.00,res:[]},
+{id:4166,n:"Brayan Martinez",p:"Laborer",e:"HHCI",ph:"626-878-6704",c:"Placentia",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:["SpaceX"],sc:[3,3,3,3,3],st:"active",rate:44.00,res:[]},
+{id:4167,n:"Christian Renteria",p:"Laborer",e:"HHCI",ph:"562-203-2865",c:"Bell",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:["SpaceX"],sc:[3,3,3,3,3],st:"active",rate:44.00,res:[]},
+{id:4168,n:"Gabriel Hernandez",p:"Laborer",e:"HHCI",ph:"951-232-7760",c:"Banning",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:44.00,res:[]},
+{id:4171,n:"Felipe Garcia",p:"Laborer",e:"HHCI",ph:"707-858-0940",c:"Fontana",q:["Laborer","Asphalt Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:46.00,res:[]},
+{id:4172,n:"Juan Ledesma",p:"Laborer",e:"HHCI",ph:"626-232-7862",c:"Phelan",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[2,2,3,3,2],st:"active",rate:44.00,res:[]},
+{id:4173,n:"David Bonilla",p:"Superintendent",e:"HHCI",ph:"909-827-8927",c:"Pomona",q:["Foreman","Carpenter"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SpaceX","SCE"],sc:[4,4,5,5,4],st:"active",rate:88.00,res:[]},
+{id:4174,n:"Dustin Dominicak",p:"Carpenter",e:"HHCI",ph:"951-892-6193",c:"Riverside",q:["Carpenter"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:56.00,res:[]},
+{id:4176,n:"Freddy Gonzalez",p:"Concrete Finisher",e:"HHCI",ph:"951-295-2391",c:"Moreno Valley",q:["Concrete Finisher","Concrete Foreman"],eq:[],sf:["OSHA 10"],bd:["SCE"],sc:[4,4,4,4,3],st:"active",rate:62.00,res:[]},
+{id:4177,n:"Charles Moore Jr",p:"Safety Officer",e:"HHCI",ph:"951-837-3997",c:"Murrieta",q:["Safety Officer"],eq:[],sf:["OSHA 30","First Aid/CPR","Confined Space","Fall Protection","Trench/Excavation Competent"],bd:["SCE"],sc:[5,4,5,5,5],st:"active",rate:72.00,res:[]},
+{id:4183,n:"Salvador Sandoval",p:"Screed Operator",e:"HHCI",ph:"626-636-8792",c:"La Puente",q:["Screed Operator","Asphalt Operator","Operator"],eq:["Roller"],sf:["OSHA 10"],bd:[],sc:[4,4,3,4,3],st:"active",rate:68.00,res:[]},
+{id:4185,n:"Victor Rodriguez",p:"Rail Foreman",e:"HHCI",ph:"661-754-4840",c:"Bakersfield",q:["Rail Foreman","Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["BNSF","UP Railroad"],sc:[4,4,4,4,4],st:"active",rate:76.00,res:[]},
+{id:4187,n:"Marco Rodriguez",p:"Rail Welder",e:"HHCI",ph:"661-343-4435",c:"Bakersfield",q:["Rail Welder","Welder"],eq:[],sf:["OSHA 10"],bd:["BNSF","UP Railroad"],sc:[4,4,4,4,3],st:"active",rate:68.00,res:[]},
+{id:4188,n:"Johnathan Bernabe",p:"Rail Laborer",e:"HHCI",ph:"661-384-0192",c:"Lamont",q:["Rail Laborer","Laborer"],eq:[],sf:["OSHA 10"],bd:["BNSF"],sc:[3,3,3,3,3],st:"active",rate:48.00,res:[]},
+{id:4193,n:"Eddie Sanker",p:"Safety Officer",e:"HHCI",ph:"909-528-8911",c:"Colton",q:["Safety Officer"],eq:[],sf:["OSHA 30","First Aid/CPR","Confined Space","Fall Protection"],bd:[],sc:[4,4,5,4,4],st:"active",rate:70.00,res:[]},
+{id:22350,n:"Cooper Wagner",p:"Foreman/Operator",e:"HHCI",ph:"909-801-4530",c:"Yucaipa",q:["Foreman","Operator"],eq:["Excavator","Mini Excavator","Dozer","Loader","Skid Steer","Blast Pot"],sf:["OSHA 30","First Aid/CPR"],bd:[],sc:[5,4,4,4,4],st:"active",rate:74.00,res:[]},
+{id:22412,n:"Jerry Barrientos",p:"Laborer",e:"HHCI",ph:"909-705-7327",c:"Cherry Valley",q:["Laborer"],eq:[],sf:["OSHA 10"],bd:[],sc:[3,3,3,3,3],st:"active",rate:44.00,res:[]},
+{id:82274,n:"Mike Bicondova",p:"Superintendent",e:"CPCI",ph:"951-295-8232",c:"Hesperia",q:["Foreman","Operator"],eq:["Excavator","Dozer","Loader"],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[4,3,4,4,3],st:"active",rate:86.00,res:[]},
+{id:83997,n:"Kip Frank",p:"Superintendent",e:"CPCI",ph:"951-836-7783",c:"Yucaipa",q:["Foreman","Operator"],eq:["Excavator","Loader","Crane"],sf:["OSHA 30","First Aid/CPR","Crane Signaler"],bd:["SCE","PG&E"],sc:[5,4,5,5,5],st:"active",rate:92.00,res:[]},
+{id:9031,n:"Alejandro Navarrete",p:"BEC Foreman",e:"BEC",ph:"626-807-1460",c:"Bloomington",q:["Electrician","Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[4,4,4,4,4],st:"active",rate:78.00,res:[]},
+{id:9061,n:"Claudio Bonilla",p:"Electrician",e:"BEC",ph:"562-879-8122",c:"Compton",q:["Electrician"],eq:[],sf:["OSHA 10"],bd:["SCE"],sc:[3,3,4,3,3],st:"active",rate:65.00,res:[]},
+{id:9062,n:"Jose Pena",p:"Electrician",e:"BEC",ph:"714-418-7161",c:"Westminster",q:["Electrician"],eq:[],sf:["OSHA 10"],bd:["SCE"],sc:[3,3,3,3,3],st:"active",rate:65.00,res:[]},
+{id:9023,n:"Tom Woodwaski",p:"BEC Foreman",e:"BEC",ph:"951-442-9913",c:"Lake Elsinore",q:["Electrician","Foreman"],eq:[],sf:["OSHA 30","First Aid/CPR"],bd:["SCE"],sc:[4,4,4,4,4],st:"active",rate:78.00,res:[]},
+{id:33722,n:"Magdaleno Medina",p:"Vac Truck Operator",e:"Safe-Ex",ph:"701-570-8734",c:"Banning",q:["Vac Truck Operator","Driver"],eq:["Vac Truck"],sf:["OSHA 10","HAZWOPER"],bd:[],sc:[3,3,3,3,3],st:"active",rate:58.00,res:[]},
+{id:33726,n:"Carlos Polanco",p:"GPR Technician",e:"Safe-Ex",ph:"701-570-8735",c:"Hemet",q:["GPR Technician","Vac Truck Operator"],eq:["Vac Truck"],sf:["OSHA 10"],bd:[],sc:[4,4,4,4,4],st:"active",rate:62.00,res:[]},
+{id:33728,n:"Ulises Lopez",p:"Vac Truck Operator",e:"Safe-Ex",ph:"701-951-9935",c:"Banning",q:["Vac Truck Operator","Driver"],eq:["Vac Truck"],sf:["OSHA 10","HAZWOPER"],bd:[],sc:[3,3,3,3,3],st:"active",rate:58.00,res:[]},
+{id:22596,n:"Hugo Lopez",p:"Lowbed Driver",e:"GBE",ph:"951-454-3503",c:"Moreno Valley",q:["Driver"],eq:["Lowbed"],sf:["OSHA 10"],bd:[],sc:[4,4,3,4,4],st:"active",rate:55.00,res:[]},
+{id:22383,n:"Mike Hoover",p:"Lowbed Driver",e:"GBE",ph:"951-214-5720",c:"Romoland",q:["Driver"],eq:["Lowbed"],sf:["OSHA 10"],bd:[],sc:[4,3,3,4,4],st:"active",rate:55.00,res:[]},
+{id:5071,n:"John Leavelle",p:"Truck Driver",e:"Heritage",ph:"626-261-3615",c:"West Covina",q:["Driver"],eq:["Dump Truck"],sf:["OSHA 10"],bd:[],sc:[3,3,3,4,3],st:"active",rate:52.00,res:[]}
+];
+
+const FLD=[
+{eid:"4090",n:"Joe Nuchols",role:"pm",jobs:["26132","26142","26126","26049","26141","26077"]},
+{eid:"83997",n:"Kip Frank",role:"pm",jobs:["26125"]},
+{eid:"3800",n:"Joey Mattson",role:"pm",jobs:["23505","26059"]},
+{eid:"3293",n:"Simeon Scovel",role:"pm",jobs:["24288","26045"]},
+{eid:"3606",n:"Joseph Leos",role:"pm",jobs:["20245-525","20245-534","20245-294","20245-574"]},
+{eid:"3995",n:"Sean Dusky",role:"pm",jobs:["25252"]},
+{eid:"4151",n:"Cody Wienke",role:"super",jobs:["26132"]},
+{eid:"1140",n:"Jimmy Enriquez",role:"super",jobs:["23505"]},
+{eid:"22350",n:"Cooper Wagner",role:"super",jobs:["26065"]},
+{eid:"3164",n:"Nick Gard",role:"super",jobs:["26059"]},
+{eid:"3126",n:"Raul Cabrera",role:"super",jobs:["25001","20245-525"]},
+{eid:"3157",n:"Steve Goodwin",role:"super",jobs:["25001"]},
+{eid:"1456",n:"Mike Moyers",role:"super",jobs:["20245-294"]}
+];
+
+// Enhanced jobs with start time, client requirements, start/end dates
+const JOBS=[
+{id:"26132",nm:"HT01 Content Expansion Ph1",cl:"SpaceX",pm:"Joe Nuchols",addr:"1 Rocket Rd, Hawthorne",sch:"5x8s",start:"5:00 AM",ent:"HHCI",pw:0,reqBadge:"SpaceX",reqCerts:[],startDt:"2026-03-01",endDt:"2026-08-15"},
+{id:"26142",nm:"HT01 Framing Drywall Mixing",cl:"SpaceX",pm:"Joe Nuchols",addr:"1 Rocket Rd, Hawthorne",sch:"5x8s",start:"5:00 AM",ent:"HHCI",pw:0,reqBadge:"SpaceX",reqCerts:[],startDt:"2026-04-01",endDt:"2026-07-30"},
+{id:"26126",nm:"LAX4 Fence Rack Demo",cl:"SpaceX",pm:"Joe Nuchols",addr:"1 Rocket Rd, Hawthorne",sch:"5x8s",start:"6:00 AM",ent:"HHCI",pw:0,reqBadge:"SpaceX",reqCerts:[],startDt:"2026-04-15",endDt:"2026-06-30"},
+{id:"26141",nm:"Concrete Jib Crane Pads",cl:"SpaceX",pm:"Ken Hicks",addr:"1 Rocket Rd, Hawthorne",sch:"4x10s",start:"4:00 AM",ent:"HHCI",pw:0,reqBadge:"SpaceX",reqCerts:[],startDt:"2026-05-01",endDt:"2026-07-15"},
+{id:"26049",nm:"Construction Supt Services",cl:"SpaceX",pm:"Joe Nuchols",addr:"1 Rocket Rd, Hawthorne",sch:"5x8s",start:"8:00 AM",ent:"HHCI",pw:0,reqBadge:"SpaceX",reqCerts:[],startDt:"2026-01-01",endDt:"2026-12-31"},
+{id:"26077",nm:"Concrete Dock Vault Lids",cl:"SpaceX",pm:"Ken Hicks",addr:"2980 Nimitz Rd, Long Beach",sch:"4x10s",start:"6:00 AM",ent:"HHCI",pw:0,reqBadge:"",reqCerts:[],startDt:"2026-04-01",endDt:"2026-07-01"},
+{id:"24288",nm:"Ops Center TI S Lake Tahoe",cl:"SWG",pm:"Simeon Scovel",addr:"1090 Industrial Ave, S Lake Tahoe",sch:"4x10s",start:"6:00 AM",ent:"HHCI",pw:0,reqBadge:"",reqCerts:[],startDt:"2026-03-01",endDt:"2026-08-01"},
+{id:"26065",nm:"Ventura Station Corrosion",cl:"Crimson",pm:"Cooper Wagner",addr:"Various, Ventura County",sch:"4x10s",start:"6:00 AM",ent:"HHCI",pw:0,reqBadge:"",reqCerts:[],startDt:"2026-04-01",endDt:"2026-09-01"},
+{id:"26040",nm:"Paving Auto Yard Phoenix",cl:"UP",pm:"Jerry Neuman",addr:"904 S 12th St, Phoenix AZ",sch:"4x10s",start:"6:00 AM",ent:"HHCI",pw:0,reqBadge:"UP Railroad",reqCerts:[],startDt:"2026-05-01",endDt:"2026-06-15"},
+{id:"25252",nm:"CSAS Building Redevelopment",cl:"SCE",pm:"Sean Dusky",addr:"1551 W San Bernardino Rd, Covina",sch:"4x10s",start:"6:30 AM",ent:"HHCI",pw:1,reqBadge:"SCE",reqCerts:[],startDt:"2025-09-01",endDt:"2026-12-01"},
+{id:"26125",nm:"Narrows Sub MEER Retrofit",cl:"SCE",pm:"Kip Frank",addr:"10000 Beverly Blvd, Pico Rivera",sch:"5x8s",start:"6:30 AM",ent:"HHCI",pw:1,reqBadge:"SCE",reqCerts:[],startDt:"2026-04-01",endDt:"2026-10-01"},
+{id:"26059",nm:"EV Fleet Palm Springs",cl:"SCE",pm:"Joey Mattson",addr:"36100 Cathedral Canyon Dr",sch:"4x10s",start:"6:30 AM",ent:"CPCI",pw:1,reqBadge:"SCE",reqCerts:[],startDt:"2026-03-15",endDt:"2026-08-01"},
+{id:"26045",nm:"Roof Replace Prospect Bungalow",cl:"Theme Park",pm:"Simeon Scovel",addr:"4151 Prospect Ave, LA",sch:"5x8s",start:"7:00 AM",ent:"HHCI",pw:0,reqBadge:"Disney/Theme Park",reqCerts:[],startDt:"2026-05-01",endDt:"2026-06-30"},
+{id:"25001",nm:"Collins Service Contract",cl:"Collins",pm:"Raul Cabrera",addr:"8200 Arlington Ave, Riverside",sch:"5x8s",start:"6:00 AM",ent:"HHCI",pw:0,reqBadge:"",reqCerts:[],startDt:"2025-01-01",endDt:"2026-12-31"},
+{id:"20245-525",nm:"BMS Upgrades",cl:"AT&T",pm:"Joseph Leos",addr:"455 W 2nd St, San Bernardino",sch:"5x8s",start:"6:30 AM",ent:"HHCI",pw:0,reqBadge:"AT&T",reqCerts:[],startDt:"2026-01-01",endDt:"2026-12-31"},
+{id:"20245-534",nm:"AON Project",cl:"AT&T",pm:"Joseph Leos",addr:"650 Robinson Ave, San Diego",sch:"5x8s",start:"6:30 AM",ent:"HHCI",pw:0,reqBadge:"AT&T",reqCerts:[],startDt:"2026-01-01",endDt:"2026-12-31"},
+{id:"20245-294",nm:"AT&T Linda Vista",cl:"AT&T",pm:"Joseph Leos",addr:"San Diego",sch:"5x8s",start:"6:30 AM",ent:"HHCI",pw:0,reqBadge:"AT&T",reqCerts:[],startDt:"2026-01-01",endDt:"2026-12-31"},
+{id:"20245-574",nm:"Restroom Renovations",cl:"AT&T",pm:"Joseph Leos",addr:"3750 Home Ave, San Diego",sch:"5x8s",start:"6:30 AM",ent:"HHCI",pw:0,reqBadge:"AT&T",reqCerts:[],startDt:"2026-01-01",endDt:"2026-12-31"},
+{id:"23505",nm:"Ventura College East EVCR",cl:"SCE",pm:"Joey Mattson",addr:"4667 Telegraph Rd, Ventura",sch:"4x10s",start:"7:00 AM",ent:"CPCI",pw:1,reqBadge:"SCE",reqCerts:[],startDt:"2026-02-01",endDt:"2026-07-15"}
+];
+
+// Seed requests from 5/18 dispatch
+const RQ=[
+{id:1,j:"26132",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Carpenter/Finisher",per:"Jessie Bartolo",nt:"",eq:"19' Scissor Lift",st:"approved",pr:"normal"},
+{id:2,j:"26142",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Concrete Foreman",per:"Christian Ramirez",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:3,j:"26126",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Concrete Foreman",per:"Jesus Gonzalez",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:4,j:"26126",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Laborer",per:"Angel Salazar",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:5,j:"26126",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Carpenter",per:"Luis Esparza",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:6,j:"26126",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:0,FRI:0},pos:"Laborer",per:"Gabriel Hernandez",nt:"Vacation Fri",eq:"",st:"approved",pr:"normal"},
+{id:7,j:"26126",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Laborer",per:"Brayan Martinez",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:8,j:"26126",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Laborer",per:"Christian Renteria",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:9,j:"26049",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Superintendent",per:"Cody Wienke",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:10,j:"26049",by:"Joe Nuchols",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Foreman",per:"Jake McCarter",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:11,j:"24288",by:"Simeon Scovel",d:{MON:0,TUE:1,WED:1,THU:1,FRI:1},pos:"Operator",per:"Felix Arizmendi",nt:"",eq:"Mini Ex, Skid Steer",st:"approved",pr:"normal"},
+{id:12,j:"26065",by:"Cooper Wagner",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Foreman",per:"Cooper Wagner",nt:"Blast Pot",eq:"Water Buffalo",st:"approved",pr:"normal"},
+{id:13,j:"26065",by:"Cooper Wagner",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Foreman",per:"David Badillo",nt:"Vacation Fri",eq:"",st:"approved",pr:"normal"},
+{id:14,j:"26065",by:"Cooper Wagner",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Laborer",per:"Jerry Barrientos",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:15,j:"26065",by:"Cooper Wagner",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Laborer",per:"Rafael Perez",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:16,j:"26040",by:"Jerry Neuman",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Operator",per:"Phillip Giles",nt:"Paving",eq:"",st:"approved",pr:"high"},
+{id:17,j:"26040",by:"Jerry Neuman",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Operator",per:null,nt:"Paving (2 of 3)",eq:"",st:"approved",pr:"high"},
+{id:18,j:"26040",by:"Jerry Neuman",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Operator",per:null,nt:"Paving (3 of 3)",eq:"",st:"approved",pr:"high"},
+{id:19,j:"26040",by:"Jerry Neuman",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Asphalt Operator",per:null,nt:"",eq:"",st:"approved",pr:"high"},
+{id:20,j:"26040",by:"Jerry Neuman",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Asphalt Laborer",per:null,nt:"",eq:"Roller, Water Truck",st:"approved",pr:"high"},
+{id:21,j:"25252",by:"Sean Dusky",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Laborer",per:"Oscar Castaneda",nt:"Interior demo",eq:"",st:"approved",pr:"normal"},
+{id:22,j:"25252",by:"Sean Dusky",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Laborer",per:"Sergio Luna",nt:"Interior demo",eq:"",st:"approved",pr:"normal"},
+{id:23,j:"25252",by:"Sean Dusky",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Laborer",per:"Juan Ledesma",nt:"Interior demo",eq:"",st:"approved",pr:"normal"},
+{id:24,j:"25252",by:"Sean Dusky",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Safety Officer",per:"Charles Moore Jr",nt:"",eq:"Boom Lift",st:"approved",pr:"normal"},
+{id:25,j:"26125",by:"Kip Frank",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Superintendent",per:"David Bonilla",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:26,j:"26125",by:"Kip Frank",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Carpenter",per:"Carlos Islas",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:27,j:"26125",by:"Kip Frank",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Carpenter",per:"Henry McAlpine",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:28,j:"26125",by:"Kip Frank",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Carpenter",per:"Dustin Dominicak",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:29,j:"26059",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Foreman",per:"Nick Gard",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:30,j:"26059",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Concrete Foreman",per:"Juan Barron",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:31,j:"26059",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Laborer",per:"Ismael Santillan",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:32,j:"23505",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Superintendent",per:"Jimmy Enriquez",nt:"Moorpark demob Fri",eq:"",st:"approved",pr:"normal"},
+{id:33,j:"23505",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Laborer",per:"Pio Villegas",nt:"Moorpark demob Fri",eq:"",st:"approved",pr:"normal"},
+{id:34,j:"23505",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Carpenter/Finisher",per:"Andres Garcia",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:35,j:"23505",by:"Joey Mattson",d:{MON:1,TUE:1,WED:1,THU:1,FRI:0},pos:"Concrete Finisher",per:"Freddy Gonzalez",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:36,j:"26045",by:"Simeon Scovel",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Superintendent",per:"Simeon Scovel",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:37,j:"26045",by:"Simeon Scovel",d:{MON:0,TUE:0,WED:1,THU:0,FRI:0},pos:"Laborer",per:null,nt:"Wed only (1 of 2)",eq:"",st:"approved",pr:"normal"},
+{id:38,j:"26045",by:"Simeon Scovel",d:{MON:0,TUE:0,WED:1,THU:0,FRI:0},pos:"Laborer",per:null,nt:"Wed only (2 of 2)",eq:"",st:"approved",pr:"normal"},
+{id:39,j:"25001",by:"Raul Cabrera",d:{MON:0,TUE:0,WED:1,THU:1,FRI:1},pos:"Laborer",per:"Luis Mendoza",nt:"Handyman",eq:"",st:"approved",pr:"normal"},
+{id:40,j:"25001",by:"Raul Cabrera",d:{MON:0,TUE:0,WED:1,THU:1,FRI:1},pos:"Carpenter",per:"Brian Adams",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:41,j:"25001",by:"Raul Cabrera",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Asst Superintendent",per:"Steve Goodwin",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:42,j:"20245-534",by:"Joseph Leos",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Superintendent",per:"Duane Ringhand",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:43,j:"20245-294",by:"Joseph Leos",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Superintendent",per:"Mike Moyers",nt:"",eq:"",st:"approved",pr:"normal"},
+{id:44,j:"20245-574",by:"Joseph Leos",d:{MON:1,TUE:1,WED:1,THU:1,FRI:1},pos:"Foreman",per:"Richard Mendoza",nt:"",eq:"",st:"approved",pr:"normal"}
+];
+const API = "https://script.google.com/macros/s/AKfycbytyPmPT2IKmJRrlp4HbqI116mZDbMHNlNHx1gNaVquUbGBm0z9UNf4hlScUUwL0ubJ_w/exec";
+
+// ========== API LAYER ==========
+async function apiGet(action, params) {
+  if (!API) return null;
+  let url = API + '?action=' + action;
+  if (params) Object.keys(params).forEach(k => { url += '&' + k + '=' + encodeURIComponent(params[k]); });
+  try {
+    const r = await fetch(url);
+    return await r.json();
+  } catch (e) { console.error('API GET error:', e); return null; }
+}
+
+async function apiPost(action, data) {
+  if (!API) return null;
+  try {
+    const r = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action, ...data })
+    });
+    return await r.json();
+  } catch (e) { console.error('API POST error:', e); return null; }
+}
+
+// Load all data from Google Sheet on startup
+async function loadFromSheet() {
+  if (!API) { console.log('No API configured, using seed data.'); return; }
+  const showLoading = () => {
+    const el = document.getElementById('main') || document.getElementById('app');
+    if (el) el.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:60vh;color:var(--gy)"><div style="text-align:center"><div style="font-size:14px;margin-bottom:8px">Loading dispatch data...</div><div style="font-size:10px">Connecting to Google Sheets</div></div></div>';
+  };
+  showLoading();
+
+  const data = await apiGet('load', { week: curWeek });
+  if (!data || data.error) { console.error('Load failed:', data); return; }
+
+  // Hydrate employees from sheet
+  if (data.employees && data.employees.length) {
+    W.length = 0;
+    data.employees.forEach(e => {
+      W.push({
+        id: +e.EE_ID,
+        n: e.Name,
+        p: e.Position,
+        e: e.Entity,
+        ph: e.Phone || '',
+        c: e.City || '',
+        q: tryParse(e.Qualifications, []),
+        eq: tryParse(e.EquipCerts, []),
+        sf: tryParse(e.SafetyCreds, []),
+        bd: tryParse(e.ClientBadges, []),
+        sc: [+e.Score_Quality||1, +e.Score_EquipCare||1, +e.Score_Safety||1, +e.Score_Punctuality||1, +e.Score_Teamwork||1],
+        st: e.Status || 'active',
+        rate: parseFloat(e.BurdenedRate) || 0,
+        res: tryParse(e.Restrictions, []),
+        offReason: e.OffboardReason || '',
+        offNotes: e.OffboardNotes || '',
+        offDate: e.OffboardDate || ''
+      });
+    });
+  }
+
+  // Hydrate jobs
+  if (data.jobs && data.jobs.length) {
+    JOBS.length = 0;
+    data.jobs.forEach(j => {
+      JOBS.push({
+        id: String(j.JobID),
+        nm: j.JobName,
+        cl: j.Client,
+        pm: j.PM,
+        addr: j.Address,
+        sch: j.Schedule,
+        start: j.StartTime,
+        ent: j.Entity,
+        pw: +j.PrevailingWage || 0,
+        reqBadge: j.ReqBadge || '',
+        reqCerts: tryParse(j.ReqCerts, []),
+        startDt: j.StartDate || '',
+        endDt: j.EndDate || ''
+      });
+    });
+  }
+
+  // Hydrate requests
+  if (data.requests && data.requests.length) {
+    RQ.length = 0;
+    data.requests.forEach(r => {
+      RQ.push({
+        id: +r.ReqID,
+        j: String(r.JobID),
+        by: r.RequestedBy,
+        pos: r.Position,
+        per: r.SpecificPerson || null,
+        d: { MON: +r.MON||0, TUE: +r.TUE||0, WED: +r.WED||0, THU: +r.THU||0, FRI: +r.FRI||0, SAT: +r.SAT||0, SUN: +r.SUN||0 },
+        nt: r.Notes || '',
+        eq: r.Equipment || '',
+        st: r.Status || 'approved',
+        pr: r.Priority || 'normal'
+      });
+    });
+  }
+
+  // Hydrate assignments
+  if (data.assignments) {
+    Object.keys(assigns).forEach(k => delete assigns[k]);
+    data.assignments.forEach(a => { assigns[+a.ReqID] = +a.WorkerID; });
+  }
+
+  // Hydrate hotels
+  if (data.hotels) {
+    Object.keys(hotels).forEach(k => delete hotels[k]);
+    data.hotels.forEach(h => { hotels[+h.WorkerID] = { hotel: h.HotelName, conf: h.ConfirmationNum }; });
+  }
+
+  // Hydrate daily notes
+  if (data.dailyNotes) {
+    Object.keys(dailyNotes).forEach(k => delete dailyNotes[k]);
+    data.dailyNotes.forEach(d => { dailyNotes[d.Key] = d.Notes; });
+  }
+
+  // Hydrate eq on site
+  if (data.eqOnSite) {
+    Object.keys(eqOnSite).forEach(k => delete eqOnSite[k]);
+    data.eqOnSite.forEach(e => { eqOnSite[e.JobID] = e.Equipment; });
+  }
+
+  // Hydrate start overrides
+  if (data.startOverrides) {
+    Object.keys(startOverrides).forEach(k => delete startOverrides[k]);
+    data.startOverrides.forEach(s => { startOverrides[s.Key] = s.Time; });
+  }
+
+  console.log('Loaded from Google Sheets:', W.length, 'employees,', JOBS.length, 'jobs,', RQ.length, 'requests');
+}
+
+function tryParse(val, fallback) {
+  if (!val) return fallback;
+  if (Array.isArray(val)) return val;
+  try { return JSON.parse(val); } catch (e) { return fallback; }
+}
+
+// Save-through functions: write to sheet when data changes
+function syncEmployee(w) { apiPost('saveEmployee', { employee: w }); }
+function syncJob(j) { apiPost('saveJob', { job: j }); }
+function syncRequest(r) { apiPost('saveRequest', { request: r, week: curWeek }); }
+function syncAssignment(reqId, workerId) { apiPost('saveAssignment', { reqId, workerId, week: curWeek }); }
+function syncDeleteAssignment(reqId) { apiPost('deleteAssignment', { reqId, week: curWeek }); }
+function syncHotel(workerId, hotel, conf) { apiPost('saveHotel', { workerId, hotel, conf, week: curWeek }); }
+function syncDailyNote(key, notes) { apiPost('saveDailyNote', { key, notes, week: curWeek }); }
+function syncEqOnSite(jobId, equipment) { apiPost('saveEqOnSite', { jobId, equipment, week: curWeek }); }
+function syncStartOverride(key, time) { apiPost('saveStartOverride', { key, time, week: curWeek }); }
+function syncScores(eeId, scores) { apiPost('updateScores', { eeId, scores }); }
+function syncOffboard(eeId, status, reason, notes) { apiPost('offboardEmployee', { eeId, status, reason, notes, date: new Date().toISOString().slice(0,10) }); }
+function syncReactivate(eeId) { apiPost('reactivateEmployee', { eeId }); }
+function syncPublish() { apiPost('publishDispatch', { week: curWeek }); }
+// ========== STATE ==========
+let user=null,curWeek="2026-05-18",curDay="MON",view="dispatch",modal=null,expandedJobs={};
+let editW=null,empTab="active";
+
+// ========== HELPERS ==========
+function $(s){return document.querySelector(s)}
+function $$(s){return [...document.querySelectorAll(s)]}
+function h(t){const d=document.createElement('div');d.textContent=t;return d.innerHTML}
+function wkLabel(d){const dt=new Date(d+"T12:00:00");const end=new Date(dt);end.setDate(end.getDate()+6);const m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return m[dt.getMonth()]+" "+dt.getDate()+" - "+m[end.getMonth()]+" "+end.getDate()+", "+end.getFullYear()}
+function nextMon(d,dir){const dt=new Date(d+"T12:00:00");dt.setDate(dt.getDate()+(dir*7));return dt.toISOString().slice(0,10)}
+function wk(id){return W.find(w=>w.id===id||w.id===+id)}
+function jb(id){return JOBS.find(j=>j.id===id)}
+function avgSc(sc){if(!sc||!sc.length)return 0;return (sc.reduce((a,b)=>a+b,0)/sc.length)}
+function scGrade(avg){if(avg>=4.5)return{g:"A",c:"#10B981"};if(avg>=3.5)return{g:"B",c:"#3B82F6"};if(avg>=2.5)return{g:"C",c:"#F59E0B"};return{g:"F",c:"#EF4444"}}
+function scPips(sc){return sc.map((v,i)=>`<span class="score-pip" style="background:${v>=4?'#10B981':v>=3?'#F59E0B':v>=2?'#EF4444':'#6B7280'}" title="${SCORE_LABELS[i]}: ${v}"></span>`).join('')}
+function isRedLetter(notes){const nl=notes.toLowerCase();return RKW.some(k=>nl.includes(k))}
+function statusLabel(s){return({active:"Active",vacation:"Vacation",fmla:"FMLA",workers_comp:"Workers Comp",suspended:"Suspended",terminated:"Terminated",laid_off:"Laid Off"})[s]||s}
+function entColor(e){return EC[e]||"#6B7280"}
+
+// Dispatch state helpers
+function getAssign(rqId){return assigns[rqId]}
+const assigns={};
+const hotels={};  // workerId -> {hotel,conf}
+const dailyNotes={};  // "jobId-DAY" -> string
+const startOverrides={};  // "jobId-DAY" -> time string
+const eqOnSite={};  // jobId -> "equipment text"
+
+// ========== LOGIN ==========
+function renderLogin(){
+  $('#app').innerHTML=`
+  <div class="lw"><div class="lb">
+    <img src="${LS}" class="lg">
+    <div style="font-size:26px;font-weight:800;letter-spacing:4px;margin-bottom:4px">GLOBAL DISPATCH</div>
+    <div style="font-size:10px;color:var(--gy);letter-spacing:3px;margin-bottom:24px">SYSTEM v2.0</div>
+    <div class="lt"><button id="ltA" onclick="setLT('admin')" style="background:var(--g);color:#111">ADMIN</button><button id="ltF" onclick="setLT('field')" style="background:var(--c);color:var(--gy)">FIELD</button></div>
+    <div id="loginForm"></div>
+    <div id="quickAccess" style="margin-top:20px">
+      <div style="font-size:9px;color:var(--gy);letter-spacing:2px;margin-bottom:8px">QUICK ACCESS</div>
+      <div class="qg">
+        ${ADM.map(a=>`<button class="qb" onclick="quickLogin('${a.id}')">${a.name}</button>`).join('')}
+      </div>
+    </div>
+  </div></div>`;
+  setLT('admin');
+}
+let loginType='admin';
+function setLT(t){
+  loginType=t;
+  $('#ltA').style.background=t==='admin'?'var(--g)':'var(--c)';$('#ltA').style.color=t==='admin'?'#111':'var(--gy)';
+  $('#ltF').style.background=t==='field'?'var(--g)':'var(--c)';$('#ltF').style.color=t==='field'?'#111':'var(--gy)';
+  if(t==='admin'){
+    $('#loginForm').innerHTML=`<div class="lf"><input class="li" id="lu" placeholder="Username"><input class="li" id="lp" placeholder="Password" type="password"><button class="lb2" onclick="doLogin()">LOGIN</button><div id="le" style="color:var(--rd);margin-top:8px;font-size:11px"></div></div>`;
+    $('#quickAccess').style.display='';
+  } else {
+    $('#loginForm').innerHTML=`<div class="lf"><input class="li" id="lee" placeholder="Employee Number"><button class="lb2" onclick="doFieldLogin()">ACCESS DISPATCH</button><div id="le" style="color:var(--rd);margin-top:8px;font-size:11px"></div></div>`;
+    $('#quickAccess').style.display='none';
+  }
+}
+function quickLogin(id){const a=ADM.find(x=>x.id===id);if(a){user={...a,type:'admin'};afterLogin();}}
+function doLogin(){
+  const u=$('#lu').value.trim().toLowerCase(),p=$('#lp').value;
+  const a=ADM.find(x=>x.id===u&&x.pw===p);
+  if(a){user={...a,type:'admin'};afterLogin();}
+  else{$('#le').textContent='Invalid credentials';}
+}
+function doFieldLogin(){
+  const ee=$('#lee').value.trim();
+  const f=FLD.find(x=>x.eid===ee);
+  if(f){user={...f,type:'field'};afterLogin();}
+  else{const w2=W.find(x=>x.id===+ee);if(w2){user={id:w2.id,n:w2.n,type:'crew',eid:ee};afterLogin();}
+  else{$('#le').textContent='Employee not found';}}
+}
+function afterLogin(){
+  if(user.type==='field')view='request';
+  else if(user.type==='crew')view='mySchedule';
+  else view='dispatch';
+  render();
+}
+
+// ========== MAIN RENDER ==========
+function render(){
+  if(!user){// Load from Google Sheets if API is configured
+if(API){loadFromSheet().then(()=>renderLogin());}else{renderLogin();}return;}
+  let tabs='';
+  if(user.type==='admin'){
+    tabs=`<button class="tab ${view==='dispatch'?'on':''}" onclick="sv('dispatch')">DISPATCH</button>
+    <button class="tab ${view==='employees'?'on':''}" onclick="sv('employees')">EMPLOYEES</button>
+    <button class="tab ${view==='jobs'?'on':''}" onclick="sv('jobs')">JOBS</button>
+    <button class="tab ${view==='requests'?'on':''}" onclick="sv('requests')">REQUESTS</button>`;
+  } else if(user.type==='field'){
+    tabs=`<button class="tab ${view==='request'?'on':''}" onclick="sv('request')">NEW REQUEST</button>
+    <button class="tab ${view==='myRequests'?'on':''}" onclick="sv('myRequests')">MY REQUESTS</button>`;
+  }
+  $('#app').innerHTML=`
+  <div class="hdr">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="${LH}" style="height:28px;border-radius:4px">
+      <div>${tabs}</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:10px;color:var(--gy)">${user.name}</span>
+      <button class="bf" onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+  <div id="main"></div>`;
+  if(view==='dispatch')renderDispatch();
+  else if(view==='employees')renderEmployees();
+  else if(view==='jobs')renderJobs();
+  else if(view==='requests')renderRequests();
+  else if(view==='request')renderFieldRequest();
+  else if(view==='myRequests')renderMyRequests();
+  else if(view==='mySchedule')renderMySchedule();
+}
+function sv(v){view=v;render();}
+function logout(){user=null;render();}
+
+// ========== DISPATCH COMMAND ==========
+function renderDispatch(){
+  const rqs=RQ.filter(r=>r.st==='approved');
+  const jobIds=[...new Set(rqs.map(r=>r.j))];
+  // Stats
+  const filledCount=rqs.filter(r=>assigns[r.id]).length;
+  const totalDays=rqs.reduce((s,r)=>s+Object.values(r.d).filter(v=>v).length,0);
+  const filledDays=rqs.filter(r=>assigns[r.id]).reduce((s,r)=>s+Object.values(r.d).filter(v=>v).length,0);
+  const unfilled=rqs.length-filledCount;
+  // Cost calc
+  let totalCost=0,totalHrs=0;
+  rqs.forEach(r=>{
+    const a=assigns[r.id];if(!a)return;
+    const w2=wk(a);if(!w2)return;
+    const days=Object.values(r.d).filter(v=>v).length;
+    const job=jb(r.j);
+    const hrsPerDay=job&&job.sch==='4x10s'?10:8;
+    totalHrs+=days*hrsPerDay;
+    totalCost+=days*hrsPerDay*w2.rate;
+  });
+
+  let main=`<div class="gm"><div class="sc">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="bf" onclick="navWk(-1)">&larr;</button>
+        <div style="font-weight:700;font-size:14px">${wkLabel(curWeek)}</div>
+        <button class="bf" onclick="navWk(1)">&rarr;</button>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="bf ${curDay==='ALL'?'on':''}" onclick="setDay('ALL')">ALL</button>
+        ${DAYS.map(d=>`<button class="bf ${curDay===d?'on':''}" onclick="setDay('${d}')">${d}</button>`).join('')}
+      </div>
+    </div>`;
+
+  // Job cards
+  jobIds.forEach(jid=>{
+    const job=jb(jid);if(!job)return;
+    const jrqs=rqs.filter(r=>r.j===jid);
+    const jfilled=jrqs.filter(r=>assigns[r.id]).length;
+    const exp=expandedJobs[jid]!==false;
+    // check for red letter day notes
+    let hasRL=false;
+    DAYS.forEach(d=>{const k=jid+"-"+d;if(dailyNotes[k]&&isRedLetter(dailyNotes[k]))hasRL=true;});
+    jrqs.forEach(r=>{if(r.nt&&isRedLetter(r.nt))hasRL=true;});
+    // Crew average score
+    const crewScores=jrqs.filter(r=>assigns[r.id]).map(r=>{const w2=wk(assigns[r.id]);return w2?avgSc(w2.sc):0}).filter(v=>v>0);
+    const crewAvg=crewScores.length?crewScores.reduce((a,b)=>a+b,0)/crewScores.length:0;
+    const crewGrade=scGrade(crewAvg);
+    const lowCrew=hasRL&&crewAvg>0&&crewAvg<3;
+
+    main+=`<div class="jb">
+      <div class="jh" onclick="toggleJob('${jid}')" style="border-left-color:${entColor(job.ent)}">
+        <div>
+          <div style="font-weight:700;font-size:13px">${hasRL?'<span style="color:var(--rd);margin-right:4px">&#9873;</span>':''}${h(job.nm)}</div>
+          <div style="font-size:10px;color:var(--gy)">${h(job.cl)} | ${h(job.id)} | PM: ${h(job.pm)} | ${h(job.start)}${job.reqBadge?` | <span style="color:var(--or)">&#128274; ${h(job.reqBadge)}</span>`:''}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${lowCrew?'<span style="font-size:9px;padding:2px 6px;background:rgba(239,68,68,.1);color:var(--rd);border:1px solid rgba(239,68,68,.2);font-weight:700">LOW CREW SCORE</span>':''}
+          ${crewAvg>0?`<span style="font-size:11px;font-weight:800;color:${crewGrade.c}">${crewGrade.g}</span>`:''}
+          <span style="font-size:11px;color:var(--gy)">${jfilled}/${jrqs.length}</span>
+          <span style="font-size:16px;color:var(--gy)">${exp?'&#9660;':'&#9654;'}</span>
+        </div>
+      </div>`;
+
+    if(exp){
+      // Equipment on site
+      main+=`<div style="padding:4px 12px;border-top:1px solid var(--b);display:flex;align-items:center;gap:8px;font-size:10px">
+        <span style="color:var(--gy)">ON SITE:</span>
+        <input style="flex:1;background:rgba(255,255,255,.03);border:1px solid var(--b);color:var(--w);padding:3px 6px;font-size:10px" 
+          value="${h(eqOnSite[jid]||'')}" placeholder="Equipment already on site..." onchange="eqOnSite['${jid}']=this.value;syncEqOnSite('${jid}',this.value)">
+      </div>`;
+
+      // Daily notes row
+      main+=`<div style="padding:4px 12px;display:flex;gap:4px;border-top:1px solid rgba(255,255,255,.02)">`;
+      DAYS.forEach(d=>{
+        const k=jid+"-"+d;
+        const rl=dailyNotes[k]&&isRedLetter(dailyNotes[k]);
+        const ovr=startOverrides[k]||'';
+        main+=`<div style="flex:1;min-width:0">
+          <input style="width:100%;background:${rl?'rgba(239,68,68,.08)':'rgba(255,255,255,.02)'};border:1px solid ${rl?'rgba(239,68,68,.2)':'var(--b)'};color:var(--w);padding:2px 4px;font-size:9px;margin-bottom:2px"
+            placeholder="${d} notes" value="${h(dailyNotes[k]||'')}" onchange="setDN('${k}',this.value)">
+          <input style="width:100%;background:rgba(255,255,255,.02);border:1px solid var(--b);color:var(--gy);padding:2px 4px;font-size:8px"
+            placeholder="${jb(jid).start}" value="${h(ovr)}" onchange="startOverrides['${k}']=this.value;syncStartOverride('${k}',this.value)" title="Start time override">
+        </div>`;
+      });
+      main+=`</div>`;
+
+      // Request rows
+      jrqs.forEach(r=>{
+        const a=assigns[r.id];
+        const aw=a?wk(a):null;
+        const filled=!!aw;
+        const avg=aw?avgSc(aw.sc):0;
+        const grd=aw?scGrade(avg):{g:"-",c:"var(--gy)"};
+        const htl=aw?hotels[aw.id]:null;
+
+        main+=`<div class="rr" style="grid-template-columns:180px 1fr 80px 50px 60px 50px">
+          <div>
+            <div style="font-size:10px;color:var(--gy);letter-spacing:1px">${h(r.pos)}${r.pr==='high'?' <span style="color:var(--rd)">&#9873; HIGH</span>':''}</div>
+            ${r.per?`<div style="font-size:9px;color:var(--gy)">Requested: ${h(r.per)}</div>`:''}
+            ${r.nt?`<div style="font-size:9px;color:${isRedLetter(r.nt)?'var(--rd)':'var(--gy)'}">${h(r.nt)}</div>`:''}
+            ${r.eq?`<div style="font-size:9px;color:var(--or)">&#9881; ${h(r.eq)}</div>`:''}
+          </div>
+          <div style="display:flex;align-items:center;gap:4px">
+            ${filled?`
+              <span style="font-weight:700;font-size:12px;color:var(--w)">${h(aw.n)}</span>
+              <span style="font-size:9px;color:${entColor(aw.e)}">${aw.e}</span>
+              <span style="font-size:11px;font-weight:800;color:${grd.c}">${grd.g}</span>
+              <span style="font-size:9px;color:var(--gy)">$${aw.rate}/hr</span>
+            `:`<span style="color:var(--rd);font-size:11px">UNFILLED</span>`}
+          </div>
+          <div style="display:flex;gap:1px">${DAYS.slice(0,5).map(d=>`<span class="pl ${r.d[d]?'po':'px'}">${d[0]}</span>`).join('')}${r.d.SAT?'<span class="pl po">S</span>':''}${r.d.SUN?'<span class="pl po">U</span>':''}</div>
+          ${filled&&htl?`<span style="font-size:8px;color:var(--or)" title="${h(htl.hotel)} - ${h(htl.conf)}">&#127976;</span>`:'<span></span>'}
+          <div>
+            ${filled?`<button class="br" onclick="unassign(${r.id})" style="font-size:9px">&#10005;</button>`:''}
+            <button class="bf" onclick="openFill(${r.id})" style="font-size:9px">${filled?'SWAP':'FILL'}</button>
+          </div>
+          <div style="font-size:10px;color:var(--gy)">
+            ${filled?`<span style="cursor:pointer" onclick="openHotel(${aw.id},${r.id})" title="Hotel">&#127976;</span>`:''}
+          </div>
+        </div>`;
+      });
+    }
+    main+=`</div>`;
+  });
+
+  main+=`</div>`;
+
+  // Sidebar
+  main+=`<div class="sb" style="padding:12px">
+    <div class="st"><div class="sn">${filledCount}</div><div class="sl">WORKERS ASSIGNED</div></div>
+    <div class="st" style="margin-top:8px"><div class="sn">${unfilled}</div><div class="sl">UNFILLED SLOTS</div></div>
+    <div class="st" style="margin-top:8px"><div class="sn" style="color:var(--g)">${totalHrs.toLocaleString()}</div><div class="sl">TOTAL MANHOURS</div></div>
+    <div class="st" style="margin-top:8px"><div class="sn" style="color:var(--gn)">$${totalCost.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0})}</div><div class="sl">EST. LABOR COST</div></div>
+    <div style="margin-top:16px">
+      <button class="sb2" onclick="publishDispatch()">&#9993; PUBLISH DISPATCH</button>
+      <button class="sb2" style="background:transparent;border:1px solid var(--g);color:var(--g);margin-top:6px" onclick="previewPDF()">&#128196; PREVIEW PDF</button>
+    </div>
+    <div style="margin-top:16px;padding:12px;background:rgba(255,255,255,.02);border:1px solid var(--b)">
+      <div style="font-size:9px;color:var(--gy);letter-spacing:1.5px;margin-bottom:8px">COST BY ENTITY</div>
+      ${Object.keys(EC).map(ent=>{
+        let entCost=0;
+        rqs.forEach(r=>{
+          const a=assigns[r.id];if(!a)return;
+          const w2=wk(a);if(!w2||w2.e!==ent)return;
+          const days=Object.values(r.d).filter(v=>v).length;
+          const job=jb(r.j);const hpd=job&&job.sch==='4x10s'?10:8;
+          entCost+=days*hpd*w2.rate;
+        });
+        if(entCost===0)return'';
+        return`<div style="display:flex;justify-content:space-between;padding:3px 0;font-size:11px"><span style="color:${EC[ent]}">${ent}</span><span>$${entCost.toLocaleString(undefined,{maximumFractionDigits:0})}</span></div>`;
+      }).join('')}
+    </div>
+  </div></div>`;
+
+  $('#main').innerHTML=main;
+}
+
+function toggleJob(id){expandedJobs[id]=expandedJobs[id]===false?true:expandedJobs[id]===undefined?false:!expandedJobs[id];render();}
+function navWk(d){curWeek=nextMon(curWeek,d);render();}
+function setDay(d){curDay=d;render();}
+function setDN(k,v){dailyNotes[k]=v;syncDailyNote(k,v);clearTimeout(window._dnTO);window._dnTO=setTimeout(render,800);}
+function unassign(rId){delete assigns[rId];syncDeleteAssignment(rId);render();}
+
+// ========== FILL MODAL ==========
+function openFill(rId){
+  const r=RQ.find(x=>x.id===rId);if(!r)return;
+  const job=jb(r.j);
+  // Filter candidates
+  const active=W.filter(w=>w.st==='active');
+  // Sort: qualified first, then by score
+  const scored=active.map(w=>{
+    const qMatch=w.q.includes(r.pos);
+    const badgeOk=!job.reqBadge||w.bd.includes(job.reqBadge);
+    const conflict=Object.entries(r.d).some(([d,v])=>{
+      if(!v)return false;
+      return RQ.some(r2=>r2.id!==rId&&assigns[r2.id]===w.id&&r2.d[d]);
+    });
+    const hasRestriction=w.res&&w.res.length>0;
+    return{w,qMatch,badgeOk,conflict,hasRestriction,avg:avgSc(w.sc)};
+  });
+  scored.sort((a,b)=>{
+    if(a.qMatch!==b.qMatch)return a.qMatch?-1:1;
+    if(a.conflict!==b.conflict)return a.conflict?1:-1;
+    return b.avg-a.avg;
+  });
+
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx">
+    <div style="padding:12px;border-bottom:2px solid var(--g);display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-weight:700">FILL: ${h(r.pos)}</div>
+        <div style="font-size:10px;color:var(--gy)">${h(job.nm)} | ${h(job.cl)}${job.reqBadge?` | <span style="color:var(--or)">Requires ${h(job.reqBadge)} badge</span>`:''}</div>
+        ${r.per?`<div style="font-size:10px;color:var(--g)">Requested: ${h(r.per)}</div>`:''}
+      </div>
+      <button class="br" onclick="closeModal()">&#10005; CLOSE</button>
+    </div>
+    <div style="padding:8px 12px;border-bottom:1px solid var(--b)">
+      <input id="fillSearch" oninput="filterFill()" placeholder="Search workers..." style="width:100%;padding:6px;background:rgba(255,255,255,.05);border:1px solid var(--b);color:var(--w);font-size:12px">
+    </div>
+    <div id="fillList" style="max-height:55vh;overflow:auto">`;
+
+  scored.forEach(({w,qMatch,badgeOk,conflict,avg})=>{
+    const grd=scGrade(avg);
+    const warns=[];
+    if(!qMatch)warns.push('<span style="color:var(--or)">Not qualified</span>');
+    if(!badgeOk)warns.push(`<span style="color:var(--rd)">No ${job.reqBadge} badge</span>`);
+    if(conflict)warns.push('<span style="color:var(--rd)">CONFLICT</span>');
+    w.res.forEach(rs=>warns.push(`<span class="restrict-tag">${h(rs)}</span>`));
+
+    html+=`<div class="cr" data-name="${w.n.toLowerCase()}" onclick="doFill(${rId},${w.id})">
+      <div>
+        <div style="font-weight:700;font-size:12px">${h(w.n)}</div>
+        <div style="font-size:9px;color:${entColor(w.e)}">${w.e} | ${h(w.p)} | ${h(w.c)}</div>
+        <div style="font-size:9px;color:var(--gy)">${w.q.join(', ')}</div>
+        ${warns.length?`<div style="margin-top:2px">${warns.join(' ')}</div>`:''}
+      </div>
+      <div style="text-align:center">
+        <div class="score-bar">${scPips(w.sc)}</div>
+        <div style="font-size:16px;font-weight:800;color:${grd.c};margin-top:2px">${grd.g}</div>
+        <div style="font-size:9px;color:var(--gy)">${avg.toFixed(1)}</div>
+      </div>
+      <div style="font-size:10px;color:var(--gy)">$${w.rate}</div>
+      <div>${w.eq.length?w.eq.map(e=>`<span class="chip chip-b">${e}</span>`).join(''):'<span style="font-size:9px;color:var(--gy)">-</span>'}</div>
+      <div>${w.bd.length?w.bd.map(b=>`<span class="chip chip-o">${b}</span>`).join(''):'<span style="font-size:9px;color:var(--gy)">-</span>'}</div>
+    </div>`;
+  });
+  html+=`</div></div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+  setTimeout(()=>document.getElementById('fillSearch')?.focus(),100);
+}
+function filterFill(){
+  const q=document.getElementById('fillSearch').value.toLowerCase();
+  document.querySelectorAll('#fillList .cr').forEach(el=>{
+    el.style.display=el.dataset.name.includes(q)?'':'none';
+  });
+}
+function doFill(rId,wId){assigns[rId]=wId;syncAssignment(rId,wId);closeModal();render();}
+function closeModal(){document.querySelectorAll('.mb').forEach(m=>m.remove());}
+
+// ========== HOTEL MODAL ==========
+function openHotel(wId,rId){
+  const w2=wk(wId);
+  const h2=hotels[wId]||{hotel:'',conf:''};
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx" style="width:400px">
+    <div style="padding:12px;border-bottom:2px solid var(--g)">
+      <div style="font-weight:700">HOTEL: ${w2?w2.n:''}</div>
+    </div>
+    <div style="padding:16px">
+      <label class="fl">Hotel Name</label>
+      <input class="fi" id="htlName" value="${h(h2.hotel)}" placeholder="Hampton Inn Roseville">
+      <label class="fl" style="margin-top:12px">Confirmation #</label>
+      <input class="fi" id="htlConf" value="${h(h2.conf)}" placeholder="HH4729">
+      <button class="sb2" style="margin-top:16px" onclick="saveHotel(${wId})">SAVE</button>
+    </div>
+  </div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+function saveHotel(wId){var h2=
+  hotels[wId]={hotel:$('#htlName').value,conf:$('#htlConf').value};
+  closeModal();render();
+}
+
+// ========== EMPLOYEES TAB ==========
+function renderEmployees(){
+  const activeW=W.filter(w=>empTab==='active'?w.st==='active':w.st!=='active');
+  activeW.sort((a,b)=>a.n.localeCompare(b.n));
+
+  let html=`<div style="padding:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div style="display:flex;gap:6px">
+        <button class="bf ${empTab==='active'?'on':''}" onclick="empTab='active';render()">ACTIVE (${W.filter(w=>w.st==='active').length})</button>
+        <button class="bf ${empTab==='archived'?'on':''}" onclick="empTab='archived';render()">ARCHIVED (${W.filter(w=>w.st!=='active').length})</button>
+      </div>
+      <button class="bf on" onclick="openAddEmployee()">+ NEW EMPLOYEE</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px">`;
+
+  activeW.forEach(w=>{
+    const avg=avgSc(w.sc);
+    const grd=scGrade(avg);
+    html+=`<div style="background:var(--c);border:1px solid var(--b);padding:12px;cursor:pointer" onclick="openWorkerProfile(${w.id})">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <div style="font-weight:700;font-size:13px">${h(w.n)}</div>
+          <div style="font-size:10px;color:${entColor(w.e)}">${w.e} | ${h(w.p)}</div>
+          <div style="font-size:10px;color:var(--gy)">EE# ${w.id} | ${h(w.c)}</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:20px;font-weight:800;color:${grd.c}">${grd.g}</div>
+          <div style="font-size:9px;color:var(--gy)">${avg.toFixed(1)}</div>
+          <div class="score-bar" style="justify-content:center">${scPips(w.sc)}</div>
+        </div>
+      </div>
+      <div style="margin-top:6px">
+        ${w.q.map(q=>`<span class="chip chip-g">${q}</span>`).join('')}
+      </div>
+      ${w.eq.length?`<div style="margin-top:4px">${w.eq.map(e=>`<span class="chip chip-b">${e}</span>`).join('')}</div>`:''}
+      ${w.bd.length?`<div style="margin-top:4px">${w.bd.map(b=>`<span class="chip chip-o">${b}</span>`).join('')}</div>`:''}
+      ${w.sf.length?`<div style="margin-top:4px">${w.sf.map(s=>`<span class="chip chip-p">${s}</span>`).join('')}</div>`:''}
+      ${w.res.length?`<div style="margin-top:4px">${w.res.map(r=>`<span class="restrict-tag">${h(r)}</span>`).join('')}</div>`:''}
+      <div style="margin-top:6px;font-size:10px;color:var(--gy)">$${w.rate.toFixed(2)}/hr burdened${w.st!=='active'?' | <span style="color:var(--rd)">'+statusLabel(w.st)+'</span>':''}</div>
+    </div>`;
+  });
+  html+=`</div></div>`;
+  $('#main').innerHTML=html;
+}
+
+// ========== WORKER PROFILE MODAL ==========
+function openWorkerProfile(wId){
+  const w=wk(wId);if(!w)return;
+  const avg=avgSc(w.sc);
+  const grd=scGrade(avg);
+
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx" style="width:560px">
+    <div style="padding:12px;border-bottom:2px solid var(--g);display:flex;justify-content:space-between;align-items:center">
+      <div>
+        <div style="font-weight:700;font-size:16px">${h(w.n)}</div>
+        <div style="font-size:11px;color:${entColor(w.e)}">${w.e} | ${h(w.p)} | EE# ${w.id}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="text-align:center"><div style="font-size:28px;font-weight:800;color:${grd.c}">${grd.g}</div><div style="font-size:9px;color:var(--gy)">${avg.toFixed(1)}/5.0</div></div>
+        <button class="br" onclick="closeModal()">&#10005;</button>
+      </div>
+    </div>
+    <div style="padding:12px;max-height:65vh;overflow:auto">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+        <div><label class="fl">Phone</label><div style="font-size:12px">${h(w.ph||'N/A')}</div></div>
+        <div><label class="fl">City</label><div style="font-size:12px">${h(w.c)}</div></div>
+        <div><label class="fl">Status</label><div style="font-size:12px">${statusLabel(w.st)}</div></div>
+        <div><label class="fl">Burdened Rate</label><div style="font-size:12px">$${w.rate.toFixed(2)}/hr</div></div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">SCORES (Jerry: Quality, Equip Care, Safety | Johnathan: Punctuality, Teamwork)</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;text-align:center">
+          ${SCORE_LABELS.map((l,i)=>`<div>
+            <div style="font-size:9px;color:var(--gy)">${l}</div>
+            <select style="width:100%;background:var(--c);border:1px solid var(--b);color:var(--w);padding:4px;font-size:14px;font-weight:700;text-align:center" onchange="updateScore(${w.id},${i},+this.value)">
+              ${[1,2,3,4,5].map(v=>`<option value="${v}" ${w.sc[i]===v?'selected':''}>${v}</option>`).join('')}
+            </select>
+          </div>`).join('')}
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">POSITIONS QUALIFIED</div>
+        <div>${POS.map(p=>`<label style="display:inline-flex;align-items:center;gap:3px;margin:3px 6px 3px 0;font-size:10px;cursor:pointer">
+          <input type="checkbox" ${w.q.includes(p)?'checked':''} onchange="toggleArr(${w.id},'q','${p}',this.checked)"> ${p}
+        </label>`).join('')}</div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">EQUIPMENT CERTIFICATIONS</div>
+        <div>${EQCERTS.map(e=>`<label style="display:inline-flex;align-items:center;gap:3px;margin:3px 6px 3px 0;font-size:10px;cursor:pointer">
+          <input type="checkbox" ${w.eq.includes(e)?'checked':''} onchange="toggleArr(${w.id},'eq','${e}',this.checked)"> ${e}
+        </label>`).join('')}</div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">SAFETY CREDENTIALS</div>
+        <div>${SAFCERTS.map(s=>`<label style="display:inline-flex;align-items:center;gap:3px;margin:3px 6px 3px 0;font-size:10px;cursor:pointer">
+          <input type="checkbox" ${w.sf.includes(s)?'checked':''} onchange="toggleArr(${w.id},'sf','${s}',this.checked)"> ${s}
+        </label>`).join('')}</div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">CLIENT BADGES</div>
+        <div>${BADGES.map(b=>`<label style="display:inline-flex;align-items:center;gap:3px;margin:3px 6px 3px 0;font-size:10px;cursor:pointer">
+          <input type="checkbox" ${w.bd.includes(b)?'checked':''} onchange="toggleArr(${w.id},'bd','${b}',this.checked)"> ${b}
+        </label>`).join('')}</div>
+      </div>
+
+      <div class="profile-section">
+        <div class="profile-section-title">RESTRICTIONS</div>
+        <div id="resList">${w.res.map((r,i)=>`<div style="display:flex;align-items:center;gap:4px;margin-bottom:4px">
+          <input class="fi" value="${h(r)}" style="flex:1" onchange="w.res[${i}]=this.value">
+          <button class="fr" onclick="w.res.splice(${i},1);closeModal();openWorkerProfile(${w.id})">&#10005;</button>
+        </div>`).join('')}</div>
+        <button class="fa" onclick="addRestriction(${w.id})">+ ADD RESTRICTION</button>
+      </div>
+
+      ${w.st==='active'?`<button class="sb2" style="background:var(--rd)" onclick="openOffboard(${w.id})">OFFBOARD EMPLOYEE</button>`
+        :`<button class="sb2" onclick="reactivate(${w.id})">REACTIVATE EMPLOYEE</button>`}
+    </div>
+  </div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+function updateScore(wId,idx,val){const w=wk(wId);if(w){w.sc[idx]=val;syncScores(wId,w.sc);}}
+function toggleArr(wId,field,val,checked){
+  const w=wk(wId);if(!w)return;
+  if(checked&&!w[field].includes(val))w[field].push(val);
+  if(!checked)w[field]=w[field].filter(v=>v!==val);
+  syncEmployee(w);
+}
+function addRestriction(wId){const w=wk(wId);if(w){w.res.push('');closeModal();openWorkerProfile(wId);}}
+function reactivate(wId){const w=wk(wId);if(w){w.st='active';syncReactivate(wId);closeModal();render();}}
+
+// ========== OFFBOARD MODAL ==========
+function openOffboard(wId){
+  const w=wk(wId);if(!w)return;
+  closeModal();
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx" style="width:400px">
+    <div style="padding:12px;border-bottom:2px solid var(--rd)">
+      <div style="font-weight:700;color:var(--rd)">OFFBOARD: ${h(w.n)}</div>
+    </div>
+    <div style="padding:16px">
+      <label class="fl">Status</label>
+      <select class="fs" id="offSt">
+        <option value="terminated">Terminated</option>
+        <option value="laid_off">Laid Off</option>
+        <option value="suspended">Suspended</option>
+        <option value="vacation">Vacation</option>
+        <option value="fmla">FMLA</option>
+        <option value="workers_comp">Workers Comp</option>
+      </select>
+      <label class="fl" style="margin-top:12px">Reason</label>
+      <select class="fs" id="offRs">
+        ${OFFBOARD_REASONS.map(r=>`<option>${r}</option>`).join('')}
+      </select>
+      <label class="fl" style="margin-top:12px">Notes</label>
+      <textarea class="fi" id="offNt" rows="3" placeholder="Details..."></textarea>
+      <button class="sb2" style="background:var(--rd)" onclick="doOffboard(${wId})">CONFIRM OFFBOARD</button>
+    </div>
+  </div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+function doOffboard(wId){
+  const w=wk(wId);if(!w)return;
+  w.st=$('#offSt').value;
+  w.offReason=$('#offRs').value;
+  w.offNotes=$('#offNt').value;
+  w.offDate=new Date().toISOString().slice(0,10);
+  syncOffboard(w.id,w.st,w.offReason,w.offNotes);
+  // Remove from any assigns
+  Object.keys(assigns).forEach(k=>{if(assigns[k]===wId)delete assigns[k];});
+  closeModal();render();
+}
+
+// ========== ADD EMPLOYEE ==========
+function openAddEmployee(){
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx" style="width:500px">
+    <div style="padding:12px;border-bottom:2px solid var(--g)">
+      <div style="font-weight:700">NEW EMPLOYEE</div>
+      <div style="font-size:10px;color:var(--gy)">Onboarding (Desiree)</div>
+    </div>
+    <div style="padding:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div><label class="fl">Full Name</label><input class="fi" id="neN"></div>
+        <div><label class="fl">Employee #</label><input class="fi" id="neId" type="number"></div>
+        <div><label class="fl">Entity</label><select class="fs" id="neE"><option>HHCI</option><option>CPCI</option><option>BEC</option><option>Safe-Ex</option><option>GBE</option><option>Heritage</option></select></div>
+        <div><label class="fl">Position</label><select class="fs" id="neP">${POS.map(p=>`<option>${p}</option>`).join('')}</select></div>
+        <div><label class="fl">Phone</label><input class="fi" id="nePh"></div>
+        <div><label class="fl">City</label><input class="fi" id="neC"></div>
+        <div><label class="fl">Burdened Rate ($/hr)</label><input class="fi" id="neR" type="number" step="0.01"></div>
+      </div>
+      <button class="sb2" onclick="doAddEmployee()">ADD EMPLOYEE</button>
+    </div>
+  </div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+function doAddEmployee(){
+  const n=$('#neN').value.trim();
+  const id=+$('#neId').value;
+  if(!n||!id){alert('Name and EE# required');return;}
+  var nw={id,n,p:$('#neP').value,e:$('#neE').value,ph:$('#nePh').value,c:$('#neC').value,
+    q:[$('#neP').value],eq:[],sf:["OSHA 10"],bd:[],sc:[1,1,1,1,1],st:"active",rate:+(+$('#neR').value||0).toFixed(2),res:[]};
+  W.push(nw);syncEmployee(nw);
+  closeModal();render();
+}
+
+// ========== JOBS TAB ==========
+function renderJobs(){
+  let html=`<div style="padding:16px">
+    <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+      <div style="font-weight:700;font-size:16px">ACTIVE JOBS (${JOBS.length})</div>
+      <button class="bf on" onclick="openAddJob()">+ NEW JOB</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:8px">`;
+  JOBS.forEach(j=>{
+    html+=`<div style="background:var(--c);border:1px solid var(--b);padding:12px;border-left:3px solid ${entColor(j.ent)}">
+      <div style="font-weight:700;font-size:13px">${h(j.nm)}</div>
+      <div style="font-size:10px;color:var(--gy);margin-top:2px">${h(j.cl)} | ${h(j.id)} | ${h(j.ent)}</div>
+      <div style="font-size:10px;color:var(--gy);margin-top:2px">PM: ${h(j.pm)} | ${h(j.sch)} | Start: ${h(j.start)}</div>
+      <div style="font-size:10px;color:var(--gy);margin-top:2px">${h(j.addr)}</div>
+      <div style="font-size:10px;color:var(--gy);margin-top:2px">${h(j.startDt)} to ${h(j.endDt)}</div>
+      ${j.reqBadge?`<div style="margin-top:4px"><span class="chip chip-o">${h(j.reqBadge)} Required</span></div>`:''}
+      ${j.pw?'<span class="chip chip-p" style="margin-top:4px">Prevailing Wage</span>':''}
+    </div>`;
+  });
+  html+=`</div></div>`;
+  $('#main').innerHTML=html;
+}
+
+function openAddJob(){
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx" style="width:520px">
+    <div style="padding:12px;border-bottom:2px solid var(--g)"><div style="font-weight:700">NEW JOB</div></div>
+    <div style="padding:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div><label class="fl">Job Number</label><input class="fi" id="njId"></div>
+        <div><label class="fl">Job Name</label><input class="fi" id="njNm"></div>
+        <div><label class="fl">Client</label><input class="fi" id="njCl"></div>
+        <div><label class="fl">PM</label><input class="fi" id="njPm"></div>
+        <div style="grid-column:span 2"><label class="fl">Address</label><input class="fi" id="njAd"></div>
+        <div><label class="fl">Schedule</label><select class="fs" id="njSch"><option>4x10s</option><option>5x8s</option></select></div>
+        <div><label class="fl">Start Time</label><input class="fi" id="njSt" value="6:00 AM"></div>
+        <div><label class="fl">Entity</label><select class="fs" id="njEnt"><option>HHCI</option><option>CPCI</option><option>BEC</option><option>Safe-Ex</option><option>GBE</option><option>Heritage</option></select></div>
+        <div><label class="fl">Prevailing Wage</label><select class="fs" id="njPw"><option value="0">No</option><option value="1">Yes</option></select></div>
+        <div><label class="fl">Start Date</label><input class="fi" id="njSD" type="date"></div>
+        <div><label class="fl">End Date</label><input class="fi" id="njED" type="date"></div>
+        <div><label class="fl">Required Badge</label><select class="fs" id="njBd"><option value="">None</option>${BADGES.map(b=>`<option>${b}</option>`).join('')}</select></div>
+      </div>
+      <button class="sb2" onclick="doAddJob()">CREATE JOB</button>
+    </div>
+  </div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+function doAddJob(){
+  const id=$('#njId').value.trim();if(!id){alert('Job # required');return;}
+  var nj={id,nm:$('#njNm').value,cl:$('#njCl').value,pm:$('#njPm').value,addr:$('#njAd').value,
+    sch:$('#njSch').value,start:$('#njSt').value,ent:$('#njEnt').value,pw:+$('#njPw').value,
+    reqBadge:$('#njBd').value,reqCerts:[],startDt:$('#njSD').value,endDt:$('#njED').value};
+  JOBS.push(nj);syncJob(nj);
+  closeModal();render();
+}
+
+// ========== REQUESTS TAB (Admin view of all requests) ==========
+function renderRequests(){
+  const grouped={pending:[],approved:[],declined:[]};
+  RQ.forEach(r=>{(grouped[r.st]||grouped.pending).push(r);});
+  let html=`<div style="padding:16px">
+    <div style="font-weight:700;font-size:16px;margin-bottom:12px">ALL REQUESTS</div>`;
+  ['pending','approved','declined'].forEach(st=>{
+    const rs=grouped[st];if(!rs.length)return;
+    html+=`<div style="margin-bottom:16px">
+      <div style="font-size:10px;font-weight:700;color:var(--gy);letter-spacing:1.5px;margin-bottom:6px">${st.toUpperCase()} (${rs.length})</div>`;
+    rs.forEach(r=>{
+      const job=jb(r.j)||{nm:'?',cl:'?'};
+      html+=`<div style="background:var(--c);border:1px solid var(--b);padding:8px 12px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <span style="font-weight:700;font-size:12px">${h(r.pos)}</span>
+          <span style="font-size:10px;color:var(--gy)"> on ${h(job.nm)} (${h(job.cl)})</span>
+          ${r.per?` <span style="font-size:10px;color:var(--g)">- ${h(r.per)}</span>`:''}
+          <span style="font-size:10px;color:var(--gy)"> by ${h(r.by)}</span>
+        </div>
+        <div style="display:flex;gap:4px">
+          ${st==='pending'?`<button class="bf on" onclick="approveRq(${r.id})">APPROVE</button><button class="br" onclick="declineRq(${r.id})">DECLINE</button>`:''}
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  html+=`</div>`;
+  $('#main').innerHTML=html;
+}
+function approveRq(id){const r=RQ.find(x=>x.id===id);if(r)r.st='approved';render();}
+function declineRq(id){const r=RQ.find(x=>x.id===id);if(r)r.st='declined';render();}
+
+// ========== FIELD REQUEST FORM ==========
+function renderFieldRequest(){
+  const myJobs=FLD.find(f=>f.eid===user.eid);
+  const jobList=myJobs?myJobs.jobs.map(jid=>jb(jid)).filter(Boolean):[];
+  let html=`<div class="fw">
+    <div style="font-weight:700;font-size:18px;margin-bottom:16px">NEW LABOR REQUEST</div>
+    <label class="fl">JOB</label>
+    <select class="fs" id="rqJob">${jobList.map(j=>`<option value="${j.id}">${j.id} - ${j.nm} (${j.cl})</option>`).join('')}</select>
+    <label class="fl" style="margin-top:12px">POSITION NEEDED</label>
+    <select class="fs" id="rqPos">${POS.map(p=>`<option>${p}</option>`).join('')}</select>
+    <label class="fl" style="margin-top:12px">QTY</label>
+    <input class="fi" id="rqQty" type="number" value="1" min="1" max="20">
+    <label class="fl" style="margin-top:12px">SPECIFIC PERSON (optional)</label>
+    <input class="fi" id="rqPer" placeholder="Name if specific person needed">
+    <label class="fl" style="margin-top:12px">DAYS NEEDED</label>
+    <div style="display:flex;gap:4px">${DAYS.map(d=>`<button class="dytb ${WD.includes(d)?'on':''}" id="rd_${d}" onclick="this.classList.toggle('on')">${d}</button>`).join('')}</div>
+    <label class="fl" style="margin-top:12px">EQUIPMENT NEEDED</label>
+    <input class="fi" id="rqEq" placeholder="e.g. Mini Ex, Boom Lift">
+    <label class="fl" style="margin-top:12px">NOTES</label>
+    <textarea class="fi" id="rqNt" rows="3" placeholder="Details, special instructions..."></textarea>
+    <label class="fl" style="margin-top:12px">PRIORITY</label>
+    <select class="fs" id="rqPr"><option value="normal">Normal</option><option value="high">High / Red Letter Day</option></select>
+    <button class="sb2" onclick="submitRequest()">SUBMIT REQUEST</button>
+  </div>`;
+  $('#main').innerHTML=html;
+}
+function submitRequest(){
+  const qty=Math.max(1,+$('#rqQty').value);
+  const days={};DAYS.forEach(d=>{days[d]=document.getElementById('rd_'+d).classList.contains('on')?1:0;});
+  for(let i=0;i<qty;i++){
+    var nr={
+      id:RQ.length+1,j:$('#rqJob').value,by:user.n,d:{...days},pos:$('#rqPos').value,
+      per:qty===1?$('#rqPer').value:null,
+      nt:$('#rqNt').value+(qty>1?` (${i+1} of ${qty})`:''),
+      eq:i===0?$('#rqEq').value:'',st:'approved',pr:$('#rqPr').value
+    };
+    RQ.push(nr);syncRequest(nr);
+  }
+  alert(`${qty} request(s) submitted.`);
+  view='myRequests';render();
+}
+
+// ========== MY REQUESTS (Field view) ==========
+function renderMyRequests(){
+  const mine=RQ.filter(r=>r.by===user.n);
+  let html=`<div class="fw">
+    <div style="font-weight:700;font-size:18px;margin-bottom:12px">MY REQUESTS (${mine.length})</div>`;
+  mine.forEach(r=>{
+    const job=jb(r.j)||{nm:'?'};
+    const a=assigns[r.id];const aw=a?wk(a):null;
+    html+=`<div style="background:var(--c);border:1px solid var(--b);padding:12px;margin-bottom:8px">
+      <div style="display:flex;justify-content:space-between">
+        <div>
+          <div style="font-weight:700">${h(r.pos)} - ${h(job.nm)}</div>
+          ${r.per?`<div style="font-size:10px;color:var(--g)">Requested: ${h(r.per)}</div>`:''}
+          ${r.nt?`<div style="font-size:10px;color:var(--gy)">${h(r.nt)}</div>`:''}
+        </div>
+        <div>
+          <span style="font-size:10px;padding:3px 8px;background:${r.st==='approved'?'rgba(16,185,129,.1)':r.st==='declined'?'rgba(239,68,68,.1)':'rgba(245,158,11,.1)'};color:${r.st==='approved'?'var(--gn)':r.st==='declined'?'var(--rd)':'var(--or)'};font-weight:700;letter-spacing:1px">${r.st.toUpperCase()}</span>
+        </div>
+      </div>
+      ${aw?`<div style="margin-top:6px;font-size:11px;color:var(--gn)">Assigned: ${h(aw.n)}</div>`:''}
+    </div>`;
+  });
+  html+=`</div>`;
+  $('#main').innerHTML=html;
+}
+
+// ========== MY SCHEDULE (Crew view) ==========
+function renderMySchedule(){
+  const myRqs=Object.entries(assigns).filter(([k,v])=>v===user.id||v===+user.eid).map(([k])=>RQ.find(r=>r.id===+k)).filter(Boolean);
+  let html=`<div class="fw">
+    <div style="font-weight:700;font-size:18px;margin-bottom:4px">MY SCHEDULE</div>
+    <div style="font-size:11px;color:var(--gy);margin-bottom:16px">${wkLabel(curWeek)}</div>`;
+  if(!myRqs.length)html+=`<div style="color:var(--gy);text-align:center;padding:40px">No assignments this week.</div>`;
+  myRqs.forEach(r=>{
+    const job=jb(r.j)||{nm:'?',start:'?',addr:'?'};
+    const htl=hotels[user.id]||hotels[+user.eid];
+    html+=`<div style="background:var(--c);border:1px solid var(--b);padding:12px;margin-bottom:8px;border-left:3px solid var(--g)">
+      <div style="font-weight:700">${h(job.nm)}</div>
+      <div style="font-size:11px;color:var(--gy)">${h(job.addr)}</div>
+      <div style="font-size:11px;color:var(--g);margin-top:4px">Start: ${h(job.start)} | ${h(r.pos)}</div>
+      <div style="display:flex;gap:4px;margin-top:6px">${DAYS.map(d=>`<span class="pl ${r.d[d]?'po':'px'}">${d[0]}</span>`).join('')}</div>
+      ${htl?`<div style="margin-top:6px;font-size:10px;color:var(--or)">&#127976; ${h(htl.hotel)} | Conf: ${h(htl.conf)}</div>`:''}
+    </div>`;
+  });
+  html+=`</div>`;
+  $('#main').innerHTML=html;
+}
+
+// ========== PUBLISH / PDF ==========
+function publishDispatch(){
+  const rqs=RQ.filter(r=>r.st==='approved'&&assigns[r.id]);
+  if(!rqs.length){alert('No assignments to publish');return;}
+  // Group by worker for crew texts
+  const byWorker={};
+  rqs.forEach(r=>{
+    const wId=assigns[r.id];
+    if(!byWorker[wId])byWorker[wId]=[];
+    byWorker[wId].push(r);
+  });
+  let preview="DISPATCH PUBLISH PREVIEW\n========================\n\n";
+  preview+="CREW TEXTS:\n";
+  Object.entries(byWorker).forEach(([wId,wRqs])=>{
+    const w=wk(+wId);if(!w)return;
+    const r=wRqs[0];const job=jb(r.j);
+    const days=DAYS.filter(d=>r.d[d]).map(d=>DF[d]).join(', ');
+    const htl=hotels[w.id];
+    preview+=`\nTo: ${w.n} (${w.ph})\n`;
+    preview+=`"${job.nm} - ${job.cl}\n${job.addr}\n${days}\nStart: ${job.start}\nPosition: ${r.pos}\n`;
+    if(r.eq)preview+=`Equipment: ${r.eq}\n`;
+    if(htl)preview+=`Hotel: ${htl.hotel} - Conf#: ${htl.conf}\n`;
+    preview+=`"\n`;
+  });
+
+  // Global summary
+  let totalCost=0,totalHrs=0;
+  rqs.forEach(r=>{
+    const w=wk(assigns[r.id]);if(!w)return;
+    const job=jb(r.j);const hpd=job&&job.sch==='4x10s'?10:8;
+    const days=Object.values(r.d).filter(v=>v).length;
+    totalHrs+=days*hpd;totalCost+=days*hpd*w.rate;
+  });
+  preview+=`\n\nGLOBAL SUMMARY:\nTotal Workers: ${Object.keys(byWorker).length}\nTotal Manhours: ${totalHrs}\nEst. Labor Cost: $${totalCost.toLocaleString(undefined,{maximumFractionDigits:0})}\n`;
+
+  syncPublish();
+  alert(preview);
+}
+
+function previewPDF(){
+  const rqs=RQ.filter(r=>r.st==='approved');
+  const jobIds=[...new Set(rqs.map(r=>r.j))];
+  let totalCost=0,totalHrs=0;
+
+  let html=`<div class="mb" onclick="if(event.target===this)closeModal()"><div class="mx" style="width:700px;max-height:90vh">
+    <div style="padding:12px;border-bottom:2px solid var(--g);display:flex;justify-content:space-between;align-items:center">
+      <div style="font-weight:700;font-size:16px">DISPATCH REPORT: ${wkLabel(curWeek)}</div>
+      <button class="br" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div style="padding:16px;overflow:auto;max-height:75vh;font-size:11px">`;
+
+  jobIds.forEach(jid=>{
+    const job=jb(jid);if(!job)return;
+    const jrqs=rqs.filter(r=>r.j===jid);
+    let jobCost=0,jobHrs=0;
+    html+=`<div style="margin-bottom:16px;border:1px solid var(--b);padding:8px">
+      <div style="font-weight:700;font-size:13px;border-bottom:1px solid var(--b);padding-bottom:4px;margin-bottom:6px">${h(job.nm)} (${h(job.id)})</div>
+      <div style="font-size:10px;color:var(--gy);margin-bottom:6px">${h(job.cl)} | PM: ${h(job.pm)} | ${h(job.start)} | ${h(job.addr)}</div>
+      ${eqOnSite[jid]?`<div style="font-size:10px;color:var(--or);margin-bottom:6px">On Site: ${h(eqOnSite[jid])}</div>`:''}
+      <table style="width:100%;border-collapse:collapse">
+        <tr style="font-size:9px;color:var(--gy);text-transform:uppercase;letter-spacing:1px">
+          <th style="text-align:left;padding:4px">Name</th><th style="text-align:left;padding:4px">Position</th>
+          <th style="text-align:left;padding:4px">Entity</th><th style="text-align:center;padding:4px">Days</th>
+          <th style="text-align:center;padding:4px">Hrs</th><th style="text-align:right;padding:4px">Rate</th>
+          <th style="text-align:right;padding:4px">Cost</th>
+        </tr>`;
+    jrqs.forEach(r=>{
+      const a=assigns[r.id];const w=a?wk(a):null;
+      const days=Object.values(r.d).filter(v=>v).length;
+      const hpd=job.sch==='4x10s'?10:8;
+      const hrs=days*hpd;
+      const cost=w?hrs*w.rate:0;
+      jobCost+=cost;jobHrs+=hrs;totalCost+=cost;totalHrs+=hrs;
+      html+=`<tr style="border-top:1px solid rgba(255,255,255,.04)">
+        <td style="padding:4px">${w?h(w.n):'<span style="color:var(--rd)">UNFILLED</span>'}</td>
+        <td style="padding:4px;color:var(--gy)">${h(r.pos)}</td>
+        <td style="padding:4px;color:${w?entColor(w.e):'var(--gy)'}">${w?w.e:'-'}</td>
+        <td style="padding:4px;text-align:center">${days}</td>
+        <td style="padding:4px;text-align:center">${hrs}</td>
+        <td style="padding:4px;text-align:right;color:var(--gy)">${w?'$'+w.rate.toFixed(2):'-'}</td>
+        <td style="padding:4px;text-align:right;font-weight:700">${cost?'$'+cost.toLocaleString(undefined,{maximumFractionDigits:0}):'-'}</td>
+      </tr>`;
+    });
+    html+=`<tr style="border-top:2px solid var(--b);font-weight:700">
+      <td colspan="4" style="padding:4px">Subtotal</td>
+      <td style="padding:4px;text-align:center">${jobHrs}</td><td></td>
+      <td style="padding:4px;text-align:right">$${jobCost.toLocaleString(undefined,{maximumFractionDigits:0})}</td>
+    </tr></table></div>`;
+  });
+
+  html+=`<div style="border-top:2px solid var(--g);padding-top:8px;display:flex;justify-content:space-between;font-weight:700;font-size:14px">
+    <span>TOTAL: ${totalHrs.toLocaleString()} manhours</span>
+    <span style="color:var(--gn)">$${totalCost.toLocaleString(undefined,{maximumFractionDigits:0})}</span>
+  </div>`;
+
+  html+=`</div></div></div>`;
+  document.body.insertAdjacentHTML('beforeend',html);
+}
+
+// ========== INIT ==========
+// Pre-fill assigns from seed data where person is named
+RQ.forEach(r=>{
+  if(r.per){
+    const w=W.find(x=>x.n===r.per);
+    if(w)assigns[r.id]=w.id;
+  }
+});
+
+// Load from Google Sheets if API is configured
+if(API){loadFromSheet().then(()=>renderLogin());}else{renderLogin();}
+</script></body></html>
